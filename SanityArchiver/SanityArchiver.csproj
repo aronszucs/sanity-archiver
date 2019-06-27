@@ -53,8 +53,10 @@
     <Compile Include="FileViewForm.Designer.cs">
       <DependentUpon>FileViewForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="IArchiver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Archiver.cs" />
     <EmbeddedResource Include="FileViewForm.resx">
       <DependentUpon>FileViewForm.cs</DependentUpon>
     </EmbeddedResource>

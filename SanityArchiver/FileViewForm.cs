@@ -17,15 +17,11 @@ namespace SanityArchiver
         public FileViewForm()
         {
             InitializeComponent();
-            LeftFileManager = new FileManager(leftWindow);
-            RightFileManager = new FileManager(rightWindow);
+            IArchiver archiver = new Archiver();
+            LeftFileManager = new FileManager(leftWindow, archiver);
+            RightFileManager = new FileManager(rightWindow, archiver, LeftFileManager);
             LeftFileManager.Refresh();
             RightFileManager.Refresh();
-        }
-
-        private void CheckedListBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void LeftWindow_DoubleClick(object sender, MouseEventArgs e)
@@ -47,6 +43,16 @@ namespace SanityArchiver
         private void RightWindow_DoubleClick(object sender, EventArgs e)
         {
             RightFileManager.OnItemDoubleClick();
+        }
+
+        private void LeftArchiveButton_Click(object sender, EventArgs e)
+        {
+            LeftFileManager.OnArchiveClicked();
+        }
+
+        private void RightArchiveButton_Click(object sender, EventArgs e)
+        {
+            RightFileManager.OnArchiveClicked();
         }
     }
 }
