@@ -46,19 +46,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileManager.cs" />
-    <Compile Include="FileViewForm.cs">
+    <Compile Include="archiver\ArchiverException.cs" />
+    <Compile Include="fileManager\FileManagerException.cs" />
+    <Compile Include="forms\InputPromptForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FileViewForm.Designer.cs">
+    <Compile Include="forms\InputPromptForm.Designer.cs">
+      <DependentUpon>InputPromptForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="prompter\Prompter.cs" />
+    <Compile Include="fileManager\FileManager.cs" />
+    <Compile Include="forms\FileViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\FileViewForm.Designer.cs">
       <DependentUpon>FileViewForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="IArchiver.cs" />
+    <Compile Include="archiver\IArchiver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Archiver.cs" />
-    <EmbeddedResource Include="FileViewForm.resx">
+    <Compile Include="archiver\Archiver.cs" />
+    <EmbeddedResource Include="forms\FileViewForm.resx">
       <DependentUpon>FileViewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\InputPromptForm.resx">
+      <DependentUpon>InputPromptForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -82,5 +94,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

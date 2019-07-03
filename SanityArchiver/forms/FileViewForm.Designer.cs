@@ -32,6 +32,8 @@
             this.rightWindow = new System.Windows.Forms.ListBox();
             this.leftArchiveButton = new System.Windows.Forms.Button();
             this.rightArchiveButton = new System.Windows.Forms.Button();
+            this.leftDecompressButton = new System.Windows.Forms.Button();
+            this.rightDecompressButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // leftWindow
@@ -78,11 +80,33 @@
             this.rightArchiveButton.UseVisualStyleBackColor = true;
             this.rightArchiveButton.Click += new System.EventHandler(this.RightArchiveButton_Click);
             // 
+            // leftDecompressButton
+            // 
+            this.leftDecompressButton.Location = new System.Drawing.Point(432, 82);
+            this.leftDecompressButton.Name = "leftDecompressButton";
+            this.leftDecompressButton.Size = new System.Drawing.Size(101, 37);
+            this.leftDecompressButton.TabIndex = 4;
+            this.leftDecompressButton.Text = "Decompress";
+            this.leftDecompressButton.UseVisualStyleBackColor = true;
+            this.leftDecompressButton.Click += new System.EventHandler(this.LeftDecompressButton_Click);
+            // 
+            // rightDecompressButton
+            // 
+            this.rightDecompressButton.Location = new System.Drawing.Point(969, 82);
+            this.rightDecompressButton.Name = "rightDecompressButton";
+            this.rightDecompressButton.Size = new System.Drawing.Size(101, 37);
+            this.rightDecompressButton.TabIndex = 5;
+            this.rightDecompressButton.Text = "Decompress";
+            this.rightDecompressButton.UseVisualStyleBackColor = true;
+            this.rightDecompressButton.Click += new System.EventHandler(this.RightDecompressButton_Click);
+            // 
             // FileViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1216, 493);
+            this.Controls.Add(this.rightDecompressButton);
+            this.Controls.Add(this.leftDecompressButton);
             this.Controls.Add(this.rightArchiveButton);
             this.Controls.Add(this.leftArchiveButton);
             this.Controls.Add(this.rightWindow);
@@ -99,6 +123,8 @@
         private System.Windows.Forms.ListBox rightWindow;
         private System.Windows.Forms.Button leftArchiveButton;
         private System.Windows.Forms.Button rightArchiveButton;
+        private System.Windows.Forms.Button leftDecompressButton;
+        private System.Windows.Forms.Button rightDecompressButton;
     }
 }
 

@@ -18,8 +18,9 @@ namespace SanityArchiver
         {
             InitializeComponent();
             IArchiver archiver = new Archiver();
-            LeftFileManager = new FileManager(leftWindow, archiver);
-            RightFileManager = new FileManager(rightWindow, archiver, LeftFileManager);
+            Prompter prompter = new Prompter();
+            LeftFileManager = new FileManager(leftWindow, archiver, prompter);
+            RightFileManager = new FileManager(rightWindow, archiver, prompter, LeftFileManager);
             LeftFileManager.Refresh();
             RightFileManager.Refresh();
         }
@@ -27,7 +28,6 @@ namespace SanityArchiver
         private void LeftWindow_DoubleClick(object sender, MouseEventArgs e)
         {
             LeftFileManager.OnItemDoubleClick();
-            
         }
 
         private void LeftWindow_SelectedIndexChanged(object sender, EventArgs e)
@@ -53,6 +53,16 @@ namespace SanityArchiver
         private void RightArchiveButton_Click(object sender, EventArgs e)
         {
             RightFileManager.OnArchiveClicked();
+        }
+
+        private void LeftDecompressButton_Click(object sender, EventArgs e)
+        {
+            LeftFileManager.OnDecompressClicked();
+        }
+
+        private void RightDecompressButton_Click(object sender, EventArgs e)
+        {
+            RightFileManager.OnDecompressClicked();
         }
     }
 }

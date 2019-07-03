@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
-
 
 namespace SanityArchiver
 {
-    interface IArchiver
+    public class FileManagerException : Exception
     {
-        void CompressItems(ICollection<FileSystemInfo> inputInfos, DirectoryInfo outputInfo);
+        public FileManagerException(string msg) : base(msg) {}
     }
 }
