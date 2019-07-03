@@ -64,5 +64,16 @@ namespace SanityArchiver
         {
             RightFileManager.OnDecompressClicked();
         }
+
+        private void LeftRootAlignButton_Click(object sender, EventArgs e)
+        {
+            RightFileManager.OnAlignRootClicked();
+        }
+
+        private void RightRootAlignButton_Click(object sender, EventArgs e)
+        {
+            LeftFileManager.OnAlignRootClicked();
+
+        }
     }
 }

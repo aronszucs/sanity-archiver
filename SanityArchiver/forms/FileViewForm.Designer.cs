@@ -34,6 +34,8 @@
             this.rightArchiveButton = new System.Windows.Forms.Button();
             this.leftDecompressButton = new System.Windows.Forms.Button();
             this.rightDecompressButton = new System.Windows.Forms.Button();
+            this.leftRootAlignButton = new System.Windows.Forms.Button();
+            this.rightRootAlignButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // leftWindow
@@ -100,11 +102,33 @@
             this.rightDecompressButton.UseVisualStyleBackColor = true;
             this.rightDecompressButton.Click += new System.EventHandler(this.RightDecompressButton_Click);
             // 
+            // leftRootAlignButton
+            // 
+            this.leftRootAlignButton.Location = new System.Drawing.Point(444, 143);
+            this.leftRootAlignButton.Name = "leftRootAlignButton";
+            this.leftRootAlignButton.Size = new System.Drawing.Size(147, 33);
+            this.leftRootAlignButton.TabIndex = 6;
+            this.leftRootAlignButton.Text = "<==";
+            this.leftRootAlignButton.UseVisualStyleBackColor = true;
+            this.leftRootAlignButton.Click += new System.EventHandler(this.LeftRootAlignButton_Click);
+            // 
+            // rightRootAlignButton
+            // 
+            this.rightRootAlignButton.Location = new System.Drawing.Point(444, 198);
+            this.rightRootAlignButton.Name = "rightRootAlignButton";
+            this.rightRootAlignButton.Size = new System.Drawing.Size(147, 33);
+            this.rightRootAlignButton.TabIndex = 7;
+            this.rightRootAlignButton.Text = "==>";
+            this.rightRootAlignButton.UseVisualStyleBackColor = true;
+            this.rightRootAlignButton.Click += new System.EventHandler(this.RightRootAlignButton_Click);
+            // 
             // FileViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1216, 493);
+            this.Controls.Add(this.rightRootAlignButton);
+            this.Controls.Add(this.leftRootAlignButton);
             this.Controls.Add(this.rightDecompressButton);
             this.Controls.Add(this.leftDecompressButton);
             this.Controls.Add(this.rightArchiveButton);
@@ -125,6 +149,8 @@
         private System.Windows.Forms.Button rightArchiveButton;
         private System.Windows.Forms.Button leftDecompressButton;
         private System.Windows.Forms.Button rightDecompressButton;
+        private System.Windows.Forms.Button leftRootAlignButton;
+        private System.Windows.Forms.Button rightRootAlignButton;
     }
 }
 

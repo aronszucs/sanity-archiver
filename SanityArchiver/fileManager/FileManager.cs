@@ -12,7 +12,8 @@ namespace SanityArchiver
     {
         public ArchiveRequest OnArchiveRequested;
         public DecompressRequest OnDecompressRequested;
-        public RefreshRequest OnOtherRefreshRequested;
+        public RefreshRequest OnRefreshRequested;
+        public RootChangeRequest OnRootChangeRequested;
         private IArchiver Archiver;
 
         private static readonly String PREV_DIRECTORY_SYMBOL = "..";
@@ -37,8 +38,11 @@ namespace SanityArchiver
             OnDecompressRequested = new DecompressRequest(fileManager.Decompress);
             fileManager.OnDecompressRequested = new DecompressRequest(Decompress);
 
-            OnOtherRefreshRequested = new RefreshRequest(fileManager.Refresh);
-            fileManager.OnOtherRefreshRequested = new RefreshRequest(Refresh);
+            OnRefreshRequested = new RefreshRequest(fileManager.Refresh);
+            fileManager.OnRefreshRequested = new RefreshRequest(Refresh);
+
+            OnRootChangeRequested = new RootChangeRequest(fileManager.ChangeRoot);
+            fileManager.OnRootChangeRequested = new RootChangeRequest(ChangeRoot);
         }
 
         public delegate void ArchiveRequest(ICollection<FileSystemInfo> sources);
@@ -46,6 +50,8 @@ namespace SanityArchiver
         public delegate void DecompressRequest(ICollection<FileSystemInfo> sources);
 
         public delegate void RefreshRequest();
+
+        public delegate void RootChangeRequest(DirectoryInfo dirInfo);
 
         private void Init(ListBox listBox, IArchiver archiver, Prompter prompter)
         {
@@ -80,7 +86,7 @@ namespace SanityArchiver
         public void RefreshBoth()
         {
             Refresh();
-            OnOtherRefreshRequested();
+            OnRefreshRequested();
         }
 
         public void OnItemDoubleClick()
@@ -119,6 +125,11 @@ namespace SanityArchiver
             }
         }
 
+        public void OnAlignRootClicked()
+        {
+            OnRootChangeRequested(RootDirInfo);
+        }
+
         private void NavigateTo(String dirName)
         {
             if (dirName.Equals(PREV_DIRECTORY_SYMBOL))
@@ -134,6 +145,12 @@ namespace SanityArchiver
                 catch (InvalidCastException) {}
                 catch (KeyNotFoundException) { }
             }
+            Refresh();
+        }
+       
+        public void ChangeRoot(DirectoryInfo dirInfo)
+        {
+            RootDirInfo = dirInfo;
             Refresh();
         }
 
@@ -160,7 +177,6 @@ namespace SanityArchiver
             {
 
             }
-
         }
         public void OnArchiveNameInputResponse(string input)
         {
