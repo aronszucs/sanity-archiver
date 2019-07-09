@@ -10,6 +10,7 @@ namespace SanityArchiver
 {
     interface IArchiver
     {
+        string GetSuffix();
         void CompressItems(ICollection<FileSystemInfo> inputInfos, DirectoryInfo outputInfo);
         void DecompressItems(ICollection<FileSystemInfo> inputInfos, DirectoryInfo outputInfo);
         void CompressItem(FileSystemInfo inputInfo, string outputInfo);

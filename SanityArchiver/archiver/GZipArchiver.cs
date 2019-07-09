@@ -7,15 +7,20 @@ using System.IO.Compression;
 
 namespace SanityArchiver
 {
-    public class Archiver : IArchiver
+    public class GZipArchiver : AbstractArchiver, IArchiver
     {
+
+        public string GetSuffix()
+        {
+            return ".gz";
+        }
         public void CompressItems(ICollection<FileSystemInfo> inputInfos, DirectoryInfo outputInfo)
         {
             foreach (FileSystemInfo info in inputInfos)
             {
                 try
                 {
-                    CompressItem(info, outputInfo.FullName + info.Name + ".gz");
+                    CompressItem(info, outputInfo.FullName + "\\" + info.Name + ".gz");
                 }
                 catch (InvalidDataException)
                 {
@@ -30,7 +35,8 @@ namespace SanityArchiver
                 try
                 {
                     DecompressItem
-                        (info, outputInfo.FullName + info.Name.Substring(0, info.Name.Length - 3));
+                        (info, outputInfo.FullName + "\\"
+                         + info.Name.Substring(0, info.Name.Length - 3));
                 }
                 catch (InvalidDataException)
                 {
@@ -52,6 +58,7 @@ namespace SanityArchiver
         }
         public void DecompressItem(FileSystemInfo inputInfo, string outputPath)
         {
+            //throw new ApplicationException(outputPath);
             using (FileStream input = new FileStream
                 (inputInfo.FullName, FileMode.Open, FileAccess.Read, FileShare.Read))
             using (GZipStream compressor = new GZipStream(input, CompressionMode.Decompress))
@@ -59,26 +66,6 @@ namespace SanityArchiver
                 (outputPath, FileMode.Create, FileAccess.Write, FileShare.Delete))
             {
                 WriteFile(compressor, output, outputPath);
-            }
-        }
-        private void WriteFile(Stream input, Stream output, string outputPath)
-        {
-            try
-            {
-                while (true)
-                {
-                    int b = input.ReadByte();
-                    if (b == -1)
-                    {
-                        break;
-                    }
-                    output.WriteByte((byte)b);
-                }
-            } catch (InvalidDataException)
-            {
-                FileSystemInfo invalidFile = new FileInfo(outputPath);
-                invalidFile.Delete();
-                throw new InvalidDataException();
             }
         }
     }

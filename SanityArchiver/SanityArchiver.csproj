@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip">
+      <HintPath>..\..\..\references\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -47,6 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="archiver\ArchiverException.cs" />
+    <Compile Include="archiver\AbstractArchiver.cs" />
+    <Compile Include="archiver\DotnetZipArchiver.cs" />
     <Compile Include="fileManager\FileManagerException.cs" />
     <Compile Include="forms\InputPromptForm.cs">
       <SubType>Form</SubType>
@@ -65,7 +70,7 @@
     <Compile Include="archiver\IArchiver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="archiver\Archiver.cs" />
+    <Compile Include="archiver\GZipArchiver.cs" />
     <EmbeddedResource Include="forms\FileViewForm.resx">
       <DependentUpon>FileViewForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -132,6 +132,7 @@ namespace SanityArchiver
 
         private void NavigateTo(String dirName)
         {
+            
             if (dirName.Equals(PREV_DIRECTORY_SYMBOL))
             {
                 RootDirInfo = RootDirInfo.Parent;
@@ -166,17 +167,16 @@ namespace SanityArchiver
             if (count == 1)
             {
                 SentSource = sources.ElementAt(0);
-                Prompter.HandleInput("Enter archive name", SentSource.Name + ".gz",OnArchiveNameInputResponse);
+                Prompter.HandleInput("Enter archive name",
+                                      SentSource.Name + Archiver.GetSuffix(),
+                                      OnArchiveNameInputResponse);
             }
             else if (count > 1)
             {
                 Archiver.CompressItems(sources, RootDirInfo);
                 RefreshBoth();
             }
-            else
-            {
-
-            }
+            
         }
         public void OnArchiveNameInputResponse(string input)
         {
@@ -185,11 +185,25 @@ namespace SanityArchiver
         }
         public void Decompress(ICollection<FileSystemInfo> sources)
         {
-            Archiver.DecompressItems(sources, RootDirInfo);
-            Refresh();
+            int count = sources.Count;
+            if (count == 1)
+            {
+                SentSource = sources.ElementAt(0);
+                Prompter.HandleInput("Enter file name", SentSource.Name, OnDecompressInputResponse);
+            }
+            else if (count > 1)
+            {
+                Archiver.DecompressItems(sources, RootDirInfo);
+                RefreshBoth();
+            }
+
+        }
+        public void OnDecompressInputResponse(string input)
+        {
+            Archiver.DecompressItem(SentSource, RootDirInfo + "\\" + input);
+            RefreshBoth();
         }
 
-    
 
         private List<FileSystemInfo> GetSelected()
         {

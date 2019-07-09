@@ -17,7 +17,7 @@ namespace SanityArchiver
         public FileViewForm()
         {
             InitializeComponent();
-            IArchiver archiver = new Archiver();
+            IArchiver archiver = new DotnetZipArchiver();
             Prompter prompter = new Prompter();
             LeftFileManager = new FileManager(leftWindow, archiver, prompter);
             RightFileManager = new FileManager(rightWindow, archiver, prompter, LeftFileManager);
@@ -73,7 +73,6 @@ namespace SanityArchiver
         private void RightRootAlignButton_Click(object sender, EventArgs e)
         {
             LeftFileManager.OnAlignRootClicked();
-
         }
     }
 }
