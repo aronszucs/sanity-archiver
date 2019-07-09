@@ -7,8 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SanityArchiver.service;
+using SanityArchiver.fileManager;
+using SanityArchiver.archiver;
 
-namespace SanityArchiver
+namespace SanityArchiver.forms
 {
     public partial class FileViewForm : Form
     {
@@ -18,9 +21,9 @@ namespace SanityArchiver
         {
             InitializeComponent();
             IArchiver archiver = new DotnetZipArchiver();
-            Prompter prompter = new Prompter();
-            LeftFileManager = new FileManager(leftWindow, archiver, prompter);
-            RightFileManager = new FileManager(rightWindow, archiver, prompter, LeftFileManager);
+            ArchiveService archiveService = new ArchiveService(archiver);
+            LeftFileManager = new FileManager(leftWindow, archiveService);
+            RightFileManager = new FileManager(rightWindow, archiveService, LeftFileManager);
             LeftFileManager.Refresh();
             RightFileManager.Refresh();
         }

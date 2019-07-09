@@ -1,4 +1,4 @@
-﻿namespace SanityArchiver
+﻿namespace SanityArchiver.forms
 {
     partial class FileViewForm
     {

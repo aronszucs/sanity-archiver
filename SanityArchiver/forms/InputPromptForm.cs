@@ -7,8 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SanityArchiver.prompter;
 
-namespace SanityArchiver
+namespace SanityArchiver.forms
 {
     public partial class InputPromptForm : Form
     {

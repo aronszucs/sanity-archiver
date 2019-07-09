@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SanityArchiver.forms;
 
-namespace SanityArchiver
+namespace SanityArchiver.prompter
 {
     public class Prompter
     {

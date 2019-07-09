@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using SanityArchiver.archiver;
+using SanityArchiver.forms;
+
+
 namespace SanityArchiver.service
 {
     class ArchiveService
@@ -11,8 +15,13 @@ namespace SanityArchiver.service
         private ICollection<FileSystemInfo> SentSources;
         private IArchiver Archiver;
         public delegate void RefreshHandler();
-        private RefreshHandler OnRefresh;
+        public RefreshHandler OnResponse;
         private DirectoryInfo RootDirInfo;
+
+        public ArchiveService(IArchiver archiver)
+        {
+            Archiver = archiver;
+        }
         public void Archive(ICollection<FileSystemInfo> sources, DirectoryInfo rootDirInfo)
         {
             RootDirInfo = rootDirInfo;
@@ -31,11 +40,11 @@ namespace SanityArchiver.service
             }
             Archiver.CompressItems(SentSources, RootDirInfo + "\\" + input);
             Archiver.DisableEncryption();
-            OnRefresh();
+            OnResponse();
         }
-        public void Decompress(ICollection<FileSystemInfo> sources)
+        public void Decompress(ICollection<FileSystemInfo> sources, DirectoryInfo rootDirInfo)
         {
-
+            RootDirInfo = rootDirInfo;
 
         }
         public void OnDecompressInputResponse(string input)

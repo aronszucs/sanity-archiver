@@ -7,7 +7,7 @@ using System.IO;
 using Ionic.Zip;
 
 
-namespace SanityArchiver
+namespace SanityArchiver.archiver
 {
     class DotnetZipArchiver : AbstractArchiver, IArchiver
     {

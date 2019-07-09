@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SanityArchiver
+namespace SanityArchiver.fileManager
 {
     public class FileManagerException : Exception
     {

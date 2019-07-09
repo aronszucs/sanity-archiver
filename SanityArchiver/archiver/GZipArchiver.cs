@@ -5,7 +5,7 @@ using System.IO.Compression;
 
 
 
-namespace SanityArchiver
+namespace SanityArchiver.archiver
 {
     public class GZipArchiver : AbstractArchiver, IArchiver
     {

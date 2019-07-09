@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.IO;
 using SanityArchiver.service;
 
-namespace SanityArchiver
+namespace SanityArchiver.fileManager
 {
     class FileManager
     {
@@ -15,24 +15,22 @@ namespace SanityArchiver
         public DecompressRequest OnDecompressRequested;
         public RefreshRequest OnRefreshRequested;
         public RootChangeRequest OnRootChangeRequested;
-        private IArchiver Archiver;
 
         private static readonly String PREV_DIRECTORY_SYMBOL = "..";
         private static readonly String DIRECTORY_SEPARATOR_SYMBOL = "----------------------";
         private ListBox Window;
-        private Prompter Prompter;
+        private ArchiveService ArchiveService;
         private DirectoryInfo RootDirInfo;
         private string[] LastSelectedItems;
         private String LastSelectedItem;
         private Dictionary<string, FileSystemInfo> Files = new Dictionary<string, FileSystemInfo>();
-        private ICollection<FileSystemInfo> SentSources;
-        public FileManager(ListBox listBox, IArchiver archiver, Prompter prompter)
+        public FileManager(ListBox listBox, ArchiveService archiver)
         {
-            Init(listBox, archiver, prompter);
+            Init(listBox, archiver);
         }
-        public FileManager(ListBox listBox, IArchiver archiver, Prompter prompter, FileManager fileManager)
+        public FileManager(ListBox listBox, ArchiveService archiver, FileManager fileManager)
         {
-            Init(listBox, archiver, prompter);
+            Init(listBox, archiver);
             OnArchiveRequested = new ArchiveRequest(fileManager.Archive);
             fileManager.OnArchiveRequested = new ArchiveRequest(Archive);
 
@@ -54,13 +52,13 @@ namespace SanityArchiver
 
         public delegate void RootChangeRequest(DirectoryInfo dirInfo);
 
-        private void Init(ListBox listBox, IArchiver archiver, Prompter prompter)
+        private void Init(ListBox listBox, ArchiveService archiver)
         {
             Window = listBox;
-            Archiver = archiver;
+            ArchiveService = archiver;
             RootDirInfo = new DirectoryInfo("c:\\");
             LastSelectedItems = new string[0];
-            Prompter = prompter;
+            archiver.OnResponse = RefreshBoth;
         }
         public void Refresh()
         {
@@ -90,7 +88,22 @@ namespace SanityArchiver
             OnRefreshRequested();
             
         }
-
+        private List<FileSystemInfo> GetSelected()
+        {
+            List<FileSystemInfo> selected = new List<FileSystemInfo>();
+            foreach (string item in Window.SelectedItems)
+            {
+                try
+                {
+                    selected.Add(Files[item]);
+                }
+                catch (KeyNotFoundException)
+                {
+                    throw new FileManagerException("Invalid Selection");
+                }
+            }
+            return selected;
+        }
         public void OnItemDoubleClick()
         {
             Window.SelectedItems.Clear();
@@ -106,7 +119,6 @@ namespace SanityArchiver
         public void OnDecompressClicked()
         {
             OnDecompressRequested(GetSelected());
-            Refresh();
         }
 
         public void OnSelectionChanged()
@@ -165,48 +177,14 @@ namespace SanityArchiver
 
         public void Archive(ICollection<FileSystemInfo> sources)
         {
-            SentSources = sources;
-            ArchiverForm af = new ArchiverForm
-                (OnArchiveNameInputResponse,
-                 SentSources.ElementAt(0).Name + ".zip");
-            af.Show();
-
+            ArchiveService.Archive(sources, RootDirInfo);
         }
-        public void OnArchiveNameInputResponse(string input, string password)
-        {
-            if (password != "")
-            {
-                Archiver.SetEncryption(password);
-            }
-            Archiver.CompressItems(SentSources, RootDirInfo + "\\" + input);
-            Archiver.DisableEncryption();
-            RefreshBoth();
-        }
+        
         public void Decompress(ICollection<FileSystemInfo> sources)
         {
-           
-
-        }
-        public void OnDecompressInputResponse(string input)
-        {
-            
+            ArchiveService.Decompress(sources, RootDirInfo);
         }
 
-
-        private List<FileSystemInfo> GetSelected()
-        {
-            List<FileSystemInfo> selected = new List<FileSystemInfo>();
-            foreach (string item in Window.SelectedItems)
-            {
-                try
-                {
-                    selected.Add(Files[item]);
-                } catch (KeyNotFoundException)
-                {
-                    throw new FileManagerException("Invalid Selection");
-                }
-            }
-            return selected;
-        }
+       
     }
 }
