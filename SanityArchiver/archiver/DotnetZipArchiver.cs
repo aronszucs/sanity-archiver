@@ -11,12 +11,12 @@ namespace SanityArchiver
 {
     class DotnetZipArchiver : AbstractArchiver, IArchiver
     {
-        private string Password = "anyud";
-        public void SetEncoding(string password)
+        private string Password = null;
+        public void SetEncryption(string password)
         {
             Password = password;
         }
-        public void DisableEncoding()
+        public void DisableEncryption()
         {
             Password = null;
         }
@@ -24,11 +24,19 @@ namespace SanityArchiver
         {
             return ".zip";
         }
-        public void CompressItems(ICollection<FileSystemInfo> inputInfos, DirectoryInfo outputInfo)
+        public void CompressItems(ICollection<FileSystemInfo> inputInfos, string outputInfo)
         {
-            
+            using (ZipFile zip = new ZipFile())
+            {
+                HandleEncoding(zip);
+                foreach (FileSystemInfo inputInfo in inputInfos)
+                {
+                    zip.AddFile(inputInfo.FullName);
+                }
+                zip.Save(outputInfo);
+            }
         }
-        public void DecompressItems(ICollection<FileSystemInfo> inputInfos, DirectoryInfo outputInfo)
+        public void DecompressItems(ICollection<FileSystemInfo> inputInfos, string outputInfo)
         {
             
         }
@@ -36,7 +44,6 @@ namespace SanityArchiver
         {
             using (ZipFile zip = new ZipFile())
             {
-                zip.Encryption = EncryptionAlgorithm.WinZipAes256;
                 HandleEncoding(zip);
                 zip.AddFile(inputInfo.FullName);
                 zip.Save(outputInfo);

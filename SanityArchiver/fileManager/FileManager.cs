@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using SanityArchiver.service;
 
 namespace SanityArchiver
 {
@@ -24,7 +25,7 @@ namespace SanityArchiver
         private string[] LastSelectedItems;
         private String LastSelectedItem;
         private Dictionary<string, FileSystemInfo> Files = new Dictionary<string, FileSystemInfo>();
-        private FileSystemInfo SentSource;
+        private ICollection<FileSystemInfo> SentSources;
         public FileManager(ListBox listBox, IArchiver archiver, Prompter prompter)
         {
             Init(listBox, archiver, prompter);
@@ -87,6 +88,7 @@ namespace SanityArchiver
         {
             Refresh();
             OnRefreshRequested();
+            
         }
 
         public void OnItemDoubleClick()
@@ -163,45 +165,31 @@ namespace SanityArchiver
 
         public void Archive(ICollection<FileSystemInfo> sources)
         {
-            int count = sources.Count;
-            if (count == 1)
-            {
-                SentSource = sources.ElementAt(0);
-                Prompter.HandleInput("Enter archive name",
-                                      SentSource.Name + Archiver.GetSuffix(),
-                                      OnArchiveNameInputResponse);
-            }
-            else if (count > 1)
-            {
-                Archiver.CompressItems(sources, RootDirInfo);
-                RefreshBoth();
-            }
-            
+            SentSources = sources;
+            ArchiverForm af = new ArchiverForm
+                (OnArchiveNameInputResponse,
+                 SentSources.ElementAt(0).Name + ".zip");
+            af.Show();
+
         }
-        public void OnArchiveNameInputResponse(string input)
+        public void OnArchiveNameInputResponse(string input, string password)
         {
-            Archiver.CompressItem(SentSource, RootDirInfo + "\\" + input);
+            if (password != "")
+            {
+                Archiver.SetEncryption(password);
+            }
+            Archiver.CompressItems(SentSources, RootDirInfo + "\\" + input);
+            Archiver.DisableEncryption();
             RefreshBoth();
         }
         public void Decompress(ICollection<FileSystemInfo> sources)
         {
-            int count = sources.Count;
-            if (count == 1)
-            {
-                SentSource = sources.ElementAt(0);
-                Prompter.HandleInput("Enter file name", SentSource.Name, OnDecompressInputResponse);
-            }
-            else if (count > 1)
-            {
-                Archiver.DecompressItems(sources, RootDirInfo);
-                RefreshBoth();
-            }
+           
 
         }
         public void OnDecompressInputResponse(string input)
         {
-            Archiver.DecompressItem(SentSource, RootDirInfo + "\\" + input);
-            RefreshBoth();
+            
         }
 
 

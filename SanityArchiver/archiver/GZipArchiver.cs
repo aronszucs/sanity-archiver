@@ -14,13 +14,15 @@ namespace SanityArchiver
         {
             return ".gz";
         }
-        public void CompressItems(ICollection<FileSystemInfo> inputInfos, DirectoryInfo outputInfo)
+        public void SetEncryption(string password) { }
+        public void DisableEncryption() { }
+        public void CompressItems(ICollection<FileSystemInfo> inputInfos, string outputInfo)
         {
             foreach (FileSystemInfo info in inputInfos)
             {
                 try
                 {
-                    CompressItem(info, outputInfo.FullName + "\\" + info.Name + ".gz");
+                    CompressItem(info, outputInfo);
                 }
                 catch (InvalidDataException)
                 {
@@ -28,14 +30,14 @@ namespace SanityArchiver
                 }
             }
         }
-        public void DecompressItems(ICollection<FileSystemInfo> inputInfos, DirectoryInfo outputInfo)
+        public void DecompressItems(ICollection<FileSystemInfo> inputInfos, string outputInfo)
         {
             foreach (FileSystemInfo info in inputInfos)
             {
                 try
                 {
                     DecompressItem
-                        (info, outputInfo.FullName + "\\"
+                        (info, outputInfo + "\\"
                          + info.Name.Substring(0, info.Name.Length - 3));
                 }
                 catch (InvalidDataException)
