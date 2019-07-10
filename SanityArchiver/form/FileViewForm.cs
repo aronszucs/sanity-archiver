@@ -15,15 +15,16 @@ namespace SanityArchiver.forms
 {
     public partial class FileViewForm : Form
     {
-        FileManager LeftFileManager;
-        FileManager RightFileManager;
+        private readonly FileManager LeftFileManager;
+        private readonly FileManager RightFileManager;
         public FileViewForm()
         {
             InitializeComponent();
             IArchiver archiver = new DotnetZipArchiver();
             ArchiveService archiveService = new ArchiveService(archiver);
-            LeftFileManager = new FileManager(leftWindow, archiveService);
-            RightFileManager = new FileManager(rightWindow, archiveService, LeftFileManager);
+            FileService fileService = new FileService();
+            LeftFileManager = new FileManager(leftWindow, archiveService, fileService);
+            RightFileManager = new FileManager(rightWindow, archiveService, fileService, LeftFileManager);
             LeftFileManager.Refresh();
             RightFileManager.Refresh();
         }
@@ -76,6 +77,16 @@ namespace SanityArchiver.forms
         private void RightRootAlignButton_Click(object sender, EventArgs e)
         {
             LeftFileManager.OnAlignRootClicked();
+        }
+
+        private void MoveButton_Click(object sender, EventArgs e)
+        {
+            LeftFileManager.OnMoveClicked();
+        }
+
+        private void CopyButton_Click(object sender, EventArgs e)
+        {
+            LeftFileManager.OnCopyClicked();
         }
     }
 }

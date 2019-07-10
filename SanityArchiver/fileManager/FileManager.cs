@@ -130,7 +130,14 @@ namespace SanityArchiver.fileManager
         {
             OnDecompressRequested(GetSelected());
         }
-
+        public void OnCopyClicked()
+        {
+            OnCopyRequested(GetSelected());
+        }
+        public void OnMoveClicked()
+        {
+            OnMoveRequested(GetSelected());
+        }
         public void OnSelectionChanged()
         {
             foreach (String item in Window.SelectedItems)

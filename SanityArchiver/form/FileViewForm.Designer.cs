@@ -36,6 +36,8 @@
             this.rightDecompressButton = new System.Windows.Forms.Button();
             this.leftRootAlignButton = new System.Windows.Forms.Button();
             this.rightRootAlignButton = new System.Windows.Forms.Button();
+            this.moveButton = new System.Windows.Forms.Button();
+            this.copyButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // leftWindow
@@ -104,7 +106,7 @@
             // 
             // leftRootAlignButton
             // 
-            this.leftRootAlignButton.Location = new System.Drawing.Point(444, 143);
+            this.leftRootAlignButton.Location = new System.Drawing.Point(441, 241);
             this.leftRootAlignButton.Name = "leftRootAlignButton";
             this.leftRootAlignButton.Size = new System.Drawing.Size(147, 33);
             this.leftRootAlignButton.TabIndex = 6;
@@ -114,7 +116,7 @@
             // 
             // rightRootAlignButton
             // 
-            this.rightRootAlignButton.Location = new System.Drawing.Point(444, 198);
+            this.rightRootAlignButton.Location = new System.Drawing.Point(441, 296);
             this.rightRootAlignButton.Name = "rightRootAlignButton";
             this.rightRootAlignButton.Size = new System.Drawing.Size(147, 33);
             this.rightRootAlignButton.TabIndex = 7;
@@ -122,11 +124,33 @@
             this.rightRootAlignButton.UseVisualStyleBackColor = true;
             this.rightRootAlignButton.Click += new System.EventHandler(this.RightRootAlignButton_Click);
             // 
+            // moveButton
+            // 
+            this.moveButton.Location = new System.Drawing.Point(432, 125);
+            this.moveButton.Name = "moveButton";
+            this.moveButton.Size = new System.Drawing.Size(83, 36);
+            this.moveButton.TabIndex = 8;
+            this.moveButton.Text = "Move";
+            this.moveButton.UseVisualStyleBackColor = true;
+            this.moveButton.Click += new System.EventHandler(this.MoveButton_Click);
+            // 
+            // copyButton
+            // 
+            this.copyButton.Location = new System.Drawing.Point(432, 167);
+            this.copyButton.Name = "copyButton";
+            this.copyButton.Size = new System.Drawing.Size(83, 36);
+            this.copyButton.TabIndex = 9;
+            this.copyButton.Text = "Copy";
+            this.copyButton.UseVisualStyleBackColor = true;
+            this.copyButton.Click += new System.EventHandler(this.CopyButton_Click);
+            // 
             // FileViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1216, 493);
+            this.Controls.Add(this.copyButton);
+            this.Controls.Add(this.moveButton);
             this.Controls.Add(this.rightRootAlignButton);
             this.Controls.Add(this.leftRootAlignButton);
             this.Controls.Add(this.rightDecompressButton);
@@ -151,6 +175,8 @@
         private System.Windows.Forms.Button rightDecompressButton;
         private System.Windows.Forms.Button leftRootAlignButton;
         private System.Windows.Forms.Button rightRootAlignButton;
+        private System.Windows.Forms.Button moveButton;
+        private System.Windows.Forms.Button copyButton;
     }
 }
 
