@@ -63,7 +63,7 @@ namespace SanityArchiver.archiver
                 }
                 catch (BadPasswordException)
                 {
-                    throw new ArchiverException("Bad password!");
+                    throw new IOException("Bad password!");
                 }
             }
         }

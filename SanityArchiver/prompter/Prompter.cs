@@ -12,15 +12,19 @@ namespace SanityArchiver.prompter
         public delegate void InputHandler(string input);
 
 
-        public void HandleInput(string message, InputHandler okButtonClick)
+        public static void HandleInput(string message, InputHandler okButtonClick)
         {
             InputPromptForm inp = new InputPromptForm(message, null, okButtonClick);
             inp.Show();
         }
-        public void HandleInput(string message, string defaultValue, InputHandler okButtonClick)
+        public static void HandleInput(string message, string defaultValue, InputHandler okButtonClick)
         {
             InputPromptForm inp = new InputPromptForm(message, defaultValue, okButtonClick);
             inp.Show();
+        }
+        public static void HandleError(string message)
+        {
+
         }
     }
 }

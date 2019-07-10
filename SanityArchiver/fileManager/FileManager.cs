@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using SanityArchiver.service;
+using SanityArchiver.prompter;
+using SanityArchiver.form;
 
 namespace SanityArchiver.fileManager
 {
@@ -18,9 +20,9 @@ namespace SanityArchiver.fileManager
         public FileSystemRequest OnCopyRequested;
         public FileSystemRequest OnMoveRequested;
 
-
         private static readonly string PREV_DIRECTORY_SYMBOL = "..";
         private static readonly string DIRECTORY_SEPARATOR_SYMBOL = "----------------------";
+        private static readonly string DEFAULT_STARTING_DIR = "C:\\filetest";
         private ListBox Window;
 
         private ArchiveService ArchiveService;
@@ -29,6 +31,11 @@ namespace SanityArchiver.fileManager
         private string[] LastSelectedItems;
         private string LastSelectedItem;
         private Dictionary<string, FileSystemInfo> Files = new Dictionary<string, FileSystemInfo>();
+
+        public delegate void FileSystemRequest(ICollection<FileSystemInfo> sources);
+        public delegate void RefreshRequest();
+        public delegate void RootChangeRequest(DirectoryInfo dirInfo);
+
         public FileManager(ListBox listBox, ArchiveService archiver, FileService fileService)
         {
             Init(listBox, archiver, fileService);
@@ -54,21 +61,15 @@ namespace SanityArchiver.fileManager
             OnRootChangeRequested = new RootChangeRequest(fileManager.ChangeRoot);
             fileManager.OnRootChangeRequested = new RootChangeRequest(ChangeRoot);
         }
-
-        public delegate void FileSystemRequest(ICollection<FileSystemInfo> sources);
-
-        public delegate void RefreshRequest();
-
-        public delegate void RootChangeRequest(DirectoryInfo dirInfo);
-
         private void Init(ListBox listBox, ArchiveService archiver, FileService fileService)
         {
             Window = listBox;
             ArchiveService = archiver;
+            ArchiveService.OnResponse = RefreshBoth;
             FileService = fileService;
-            RootDirInfo = new DirectoryInfo("c:\\");
+            FileService.OnResponse = RefreshBoth;
+            RootDirInfo = new DirectoryInfo(DEFAULT_STARTING_DIR);
             LastSelectedItems = new string[0];
-            archiver.OnResponse = RefreshBoth;
         }
         public void Refresh()
         {
@@ -96,7 +97,6 @@ namespace SanityArchiver.fileManager
         {
             Refresh();
             OnRefreshRequested();
-            
         }
         private List<FileSystemInfo> GetSelected()
         {
@@ -124,7 +124,6 @@ namespace SanityArchiver.fileManager
         public void OnArchiveClicked()
         {
             OnArchiveRequested(GetSelected());
-
         }
         public void OnDecompressClicked()
         {
@@ -140,7 +139,7 @@ namespace SanityArchiver.fileManager
         }
         public void OnSelectionChanged()
         {
-            foreach (String item in Window.SelectedItems)
+            foreach (string item in Window.SelectedItems)
             {
                 if (!LastSelectedItems.Contains(item))
                 {
@@ -149,21 +148,18 @@ namespace SanityArchiver.fileManager
             }
             LastSelectedItems = new string[Window.SelectedItems.Count];
             int i = 0;
-            foreach (String item in Window.SelectedItems)
+            foreach (string item in Window.SelectedItems)
             {
                 LastSelectedItems[i] = item;
                 i++;
             }
         }
-
         public void OnAlignRootClicked()
         {
             OnRootChangeRequested(RootDirInfo);
         }
-
         private void NavigateTo(String dirName)
         {
-            
             if (dirName.Equals(PREV_DIRECTORY_SYMBOL))
             {
                 RootDirInfo = RootDirInfo.Parent;
@@ -179,7 +175,6 @@ namespace SanityArchiver.fileManager
             }
             Refresh();
         }
-       
         public void ChangeRoot(DirectoryInfo dirInfo)
         {
             RootDirInfo = dirInfo;
@@ -191,24 +186,53 @@ namespace SanityArchiver.fileManager
             RootDirInfo = dirInfo;
             Refresh();
         }
-
         public void Archive(ICollection<FileSystemInfo> sources)
         {
-            ArchiveService.Archive(sources, RootDirInfo);
+            try
+            {
+                ArchiveService.Archive(sources, RootDirInfo);
+            }
+            catch (ServiceException e)
+            {
+                HandleError(e);
+            }
         }
-        
         public void Decompress(ICollection<FileSystemInfo> sources)
         {
-            ArchiveService.Decompress(sources, RootDirInfo);
+            try
+            {
+                ArchiveService.Decompress(sources, RootDirInfo);
+            }
+            catch (ServiceException e)
+            {
+                HandleError(e);
+            }
         }
-
         public void Move(ICollection<FileSystemInfo> items)
         {
-            FileService.Move(items, RootDirInfo);
+            try
+            {
+                FileService.Move(items, RootDirInfo);
+            }
+            catch (ServiceException e)
+            {
+                HandleError(e);
+            }
         }
         public void Copy(ICollection<FileSystemInfo> items)
         {
-            FileService.Copy(items, RootDirInfo);
+            try
+            {
+                FileService.Copy(items, RootDirInfo);
+            }
+            catch (ServiceException e)
+            {
+                HandleError(e);
+            }
+        }
+        private void HandleError(Exception e)
+        {
+            MessageForm mf = new MessageForm("Error", e.Message);
         }
     }
 }

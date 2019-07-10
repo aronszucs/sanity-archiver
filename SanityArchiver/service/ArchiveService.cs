@@ -10,12 +10,11 @@ using SanityArchiver.forms;
 
 namespace SanityArchiver.service
 {
-    class ArchiveService
+    class ArchiveService : AbstractService
     {
         private ICollection<FileSystemInfo> SentSources;
         private IArchiver Archiver;
-        public delegate void RefreshHandler();
-        public RefreshHandler OnResponse;
+        
         private DirectoryInfo RootDirInfo;
 
         public ArchiveService(IArchiver archiver)
@@ -56,7 +55,14 @@ namespace SanityArchiver.service
             {
                 Archiver.SetEncryption(password);
             }
-            Archiver.DecompressItem(SentSources.ElementAt(0), RootDirInfo + "\\" + input);
+            try
+            {
+                Archiver.DecompressItem(SentSources.ElementAt(0), RootDirInfo + "\\" + input);
+            }
+            catch (IOException e)
+            {
+                throw new ServiceException(e.Message);
+            }
             Archiver.DisableEncryption();
             OnResponse();
         }
