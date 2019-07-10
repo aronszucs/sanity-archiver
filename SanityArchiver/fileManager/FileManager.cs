@@ -11,31 +11,42 @@ namespace SanityArchiver.fileManager
 {
     class FileManager
     {
-        public ArchiveRequest OnArchiveRequested;
-        public DecompressRequest OnDecompressRequested;
+        public FileSystemRequest OnArchiveRequested;
+        public FileSystemRequest OnDecompressRequested;
         public RefreshRequest OnRefreshRequested;
         public RootChangeRequest OnRootChangeRequested;
+        public FileSystemRequest OnCopyRequested;
+        public FileSystemRequest OnMoveRequested;
 
-        private static readonly String PREV_DIRECTORY_SYMBOL = "..";
-        private static readonly String DIRECTORY_SEPARATOR_SYMBOL = "----------------------";
+
+        private static readonly string PREV_DIRECTORY_SYMBOL = "..";
+        private static readonly string DIRECTORY_SEPARATOR_SYMBOL = "----------------------";
         private ListBox Window;
+
         private ArchiveService ArchiveService;
+        private FileService FileService;
         private DirectoryInfo RootDirInfo;
         private string[] LastSelectedItems;
-        private String LastSelectedItem;
+        private string LastSelectedItem;
         private Dictionary<string, FileSystemInfo> Files = new Dictionary<string, FileSystemInfo>();
-        public FileManager(ListBox listBox, ArchiveService archiver)
+        public FileManager(ListBox listBox, ArchiveService archiver, FileService fileService)
         {
-            Init(listBox, archiver);
+            Init(listBox, archiver, fileService);
         }
-        public FileManager(ListBox listBox, ArchiveService archiver, FileManager fileManager)
+        public FileManager(ListBox listBox, ArchiveService archiver, FileService fileService, FileManager fileManager)
         {
-            Init(listBox, archiver);
-            OnArchiveRequested = new ArchiveRequest(fileManager.Archive);
-            fileManager.OnArchiveRequested = new ArchiveRequest(Archive);
+            Init(listBox, archiver, fileService);
+            OnArchiveRequested = new FileSystemRequest(fileManager.Archive);
+            fileManager.OnArchiveRequested = new FileSystemRequest(Archive);
 
-            OnDecompressRequested = new DecompressRequest(fileManager.Decompress);
-            fileManager.OnDecompressRequested = new DecompressRequest(Decompress);
+            OnDecompressRequested = new FileSystemRequest(fileManager.Decompress);
+            fileManager.OnDecompressRequested = new FileSystemRequest(Decompress);
+
+            OnCopyRequested = new FileSystemRequest(fileManager.Copy);
+            fileManager.OnCopyRequested = new FileSystemRequest(Copy);
+
+            OnMoveRequested = new FileSystemRequest(fileManager.Move);
+            fileManager.OnMoveRequested = new FileSystemRequest(Move);
 
             OnRefreshRequested = new RefreshRequest(fileManager.Refresh);
             fileManager.OnRefreshRequested = new RefreshRequest(Refresh);
@@ -44,18 +55,17 @@ namespace SanityArchiver.fileManager
             fileManager.OnRootChangeRequested = new RootChangeRequest(ChangeRoot);
         }
 
-        public delegate void ArchiveRequest(ICollection<FileSystemInfo> sources);
-
-        public delegate void DecompressRequest(ICollection<FileSystemInfo> sources);
+        public delegate void FileSystemRequest(ICollection<FileSystemInfo> sources);
 
         public delegate void RefreshRequest();
 
         public delegate void RootChangeRequest(DirectoryInfo dirInfo);
 
-        private void Init(ListBox listBox, ArchiveService archiver)
+        private void Init(ListBox listBox, ArchiveService archiver, FileService fileService)
         {
             Window = listBox;
             ArchiveService = archiver;
+            FileService = fileService;
             RootDirInfo = new DirectoryInfo("c:\\");
             LastSelectedItems = new string[0];
             archiver.OnResponse = RefreshBoth;
@@ -185,6 +195,13 @@ namespace SanityArchiver.fileManager
             ArchiveService.Decompress(sources, RootDirInfo);
         }
 
-       
+        public void Move(ICollection<FileSystemInfo> items)
+        {
+            FileService.Move(items, RootDirInfo);
+        }
+        public void Copy(ICollection<FileSystemInfo> items)
+        {
+            FileService.Copy(items, RootDirInfo);
+        }
     }
 }
