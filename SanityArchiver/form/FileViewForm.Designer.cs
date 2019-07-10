@@ -86,9 +86,9 @@
             // 
             this.leftDecompressButton.Location = new System.Drawing.Point(432, 82);
             this.leftDecompressButton.Name = "leftDecompressButton";
-            this.leftDecompressButton.Size = new System.Drawing.Size(101, 37);
+            this.leftDecompressButton.Size = new System.Drawing.Size(83, 37);
             this.leftDecompressButton.TabIndex = 4;
-            this.leftDecompressButton.Text = "Decompress";
+            this.leftDecompressButton.Text = "Unpack";
             this.leftDecompressButton.UseVisualStyleBackColor = true;
             this.leftDecompressButton.Click += new System.EventHandler(this.LeftDecompressButton_Click);
             // 
@@ -96,9 +96,9 @@
             // 
             this.rightDecompressButton.Location = new System.Drawing.Point(969, 82);
             this.rightDecompressButton.Name = "rightDecompressButton";
-            this.rightDecompressButton.Size = new System.Drawing.Size(101, 37);
+            this.rightDecompressButton.Size = new System.Drawing.Size(83, 37);
             this.rightDecompressButton.TabIndex = 5;
-            this.rightDecompressButton.Text = "Decompress";
+            this.rightDecompressButton.Text = "Unpack";
             this.rightDecompressButton.UseVisualStyleBackColor = true;
             this.rightDecompressButton.Click += new System.EventHandler(this.RightDecompressButton_Click);
             // 

@@ -30,7 +30,6 @@ namespace SanityArchiver.service
                 (OnArchiveNameInputResponse,
                  SentSources.ElementAt(0).Name + ".zip");
             af.Show();
-
         }
         public void OnArchiveNameInputResponse(string input, string password)
         {
@@ -45,11 +44,21 @@ namespace SanityArchiver.service
         public void Decompress(ICollection<FileSystemInfo> sources, DirectoryInfo rootDirInfo)
         {
             RootDirInfo = rootDirInfo;
-
+            SentSources = sources;
+            ArchiverForm af = new ArchiverForm
+                (OnDecompressInputResponse,
+                 SentSources.ElementAt(0).Name);
+            af.Show();
         }
-        public void OnDecompressInputResponse(string input)
+        public void OnDecompressInputResponse(string input, string password)
         {
-
+            if (password != "")
+            {
+                Archiver.SetEncryption(password);
+            }
+            Archiver.DecompressItem(SentSources.ElementAt(0), RootDirInfo + "\\" + input);
+            Archiver.DisableEncryption();
+            OnResponse();
         }
     }
 }
