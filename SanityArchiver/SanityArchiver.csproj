@@ -59,6 +59,12 @@
     <Compile Include="form\ArchiverForm.Designer.cs">
       <DependentUpon>ArchiverForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="form\AttributeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="form\AttributeForm.Designer.cs">
+      <DependentUpon>AttributeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="form\MessageForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -85,10 +91,14 @@
     <Compile Include="archiver\GZipArchiver.cs" />
     <Compile Include="service\ArchiveService.cs" />
     <Compile Include="service\AbstractService.cs" />
+    <Compile Include="data\SettableAttributes.cs" />
     <Compile Include="service\ServiceException.cs" />
     <Compile Include="service\FileService.cs" />
     <EmbeddedResource Include="form\ArchiverForm.resx">
       <DependentUpon>ArchiverForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="form\AttributeForm.resx">
+      <DependentUpon>AttributeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="form\FileViewForm.resx">
       <DependentUpon>FileViewForm.cs</DependentUpon>

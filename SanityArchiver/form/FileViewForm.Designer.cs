@@ -38,6 +38,7 @@
             this.rightRootAlignButton = new System.Windows.Forms.Button();
             this.moveButton = new System.Windows.Forms.Button();
             this.copyButton = new System.Windows.Forms.Button();
+            this.leftSetAttributeButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // leftWindow
@@ -106,7 +107,7 @@
             // 
             // leftRootAlignButton
             // 
-            this.leftRootAlignButton.Location = new System.Drawing.Point(441, 241);
+            this.leftRootAlignButton.Location = new System.Drawing.Point(444, 355);
             this.leftRootAlignButton.Name = "leftRootAlignButton";
             this.leftRootAlignButton.Size = new System.Drawing.Size(147, 33);
             this.leftRootAlignButton.TabIndex = 6;
@@ -116,7 +117,7 @@
             // 
             // rightRootAlignButton
             // 
-            this.rightRootAlignButton.Location = new System.Drawing.Point(441, 296);
+            this.rightRootAlignButton.Location = new System.Drawing.Point(444, 410);
             this.rightRootAlignButton.Name = "rightRootAlignButton";
             this.rightRootAlignButton.Size = new System.Drawing.Size(147, 33);
             this.rightRootAlignButton.TabIndex = 7;
@@ -144,11 +145,22 @@
             this.copyButton.UseVisualStyleBackColor = true;
             this.copyButton.Click += new System.EventHandler(this.CopyButton_Click);
             // 
+            // leftSetAttributeButton
+            // 
+            this.leftSetAttributeButton.Location = new System.Drawing.Point(432, 209);
+            this.leftSetAttributeButton.Name = "leftSetAttributeButton";
+            this.leftSetAttributeButton.Size = new System.Drawing.Size(83, 36);
+            this.leftSetAttributeButton.TabIndex = 10;
+            this.leftSetAttributeButton.Text = "Attr";
+            this.leftSetAttributeButton.UseVisualStyleBackColor = true;
+            this.leftSetAttributeButton.Click += new System.EventHandler(this.LeftSetAttributeButton_Click);
+            // 
             // FileViewForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1216, 493);
+            this.Controls.Add(this.leftSetAttributeButton);
             this.Controls.Add(this.copyButton);
             this.Controls.Add(this.moveButton);
             this.Controls.Add(this.rightRootAlignButton);
@@ -177,6 +189,7 @@
         private System.Windows.Forms.Button rightRootAlignButton;
         private System.Windows.Forms.Button moveButton;
         private System.Windows.Forms.Button copyButton;
+        private System.Windows.Forms.Button leftSetAttributeButton;
     }
 }
 

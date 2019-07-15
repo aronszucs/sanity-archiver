@@ -88,5 +88,10 @@ namespace SanityArchiver.forms
         {
             LeftFileManager.OnCopyClicked();
         }
+
+        private void LeftSetAttributeButton_Click(object sender, EventArgs e)
+        {
+            LeftFileManager.OnSetAttributeClicked();
+        }
     }
 }

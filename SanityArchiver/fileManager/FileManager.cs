@@ -137,6 +137,10 @@ namespace SanityArchiver.fileManager
         {
             OnMoveRequested(GetSelected());
         }
+        public void OnSetAttributeClicked()
+        {
+            FileService.SetAttribute(GetSelected());
+        }
         public void OnSelectionChanged()
         {
             foreach (string item in Window.SelectedItems)

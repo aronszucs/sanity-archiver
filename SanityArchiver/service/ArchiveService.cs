@@ -12,7 +12,6 @@ namespace SanityArchiver.service
 {
     class ArchiveService : AbstractService
     {
-        private ICollection<FileSystemInfo> SentSources;
         private IArchiver Archiver;
         
         private DirectoryInfo RootDirInfo;

@@ -26,12 +26,13 @@ namespace SanityArchiver.archiver
         }
         public void CompressItems(ICollection<FileSystemInfo> inputInfos, string outputInfo)
         {
+
             using (ZipFile zip = new ZipFile())
             {
                 HandleEncoding(zip);
                 foreach (FileSystemInfo inputInfo in inputInfos)
                 {
-                    zip.AddFile(inputInfo.FullName);
+                    zip.AddFile(inputInfo.FullName, "");
                 }
                 zip.Save(outputInfo);
             }
@@ -45,7 +46,7 @@ namespace SanityArchiver.archiver
             using (ZipFile zip = new ZipFile())
             {
                 HandleEncoding(zip);
-                zip.AddFile(inputInfo.FullName);
+                zip.AddFile(inputInfo.FullName, "");
                 zip.Save(outputInfo);
             }
         }
