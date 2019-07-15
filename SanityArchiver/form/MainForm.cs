@@ -13,11 +13,11 @@ using SanityArchiver.archiver;
 
 namespace SanityArchiver.forms
 {
-    public partial class FileViewForm : Form
+    public partial class MainForm : Form
     {
         private readonly FileManager LeftFileManager;
         private readonly FileManager RightFileManager;
-        public FileViewForm()
+        public MainForm()
         {
             InitializeComponent();
             IArchiver archiver = new DotnetZipArchiver();
@@ -25,6 +25,9 @@ namespace SanityArchiver.forms
             FileService fileService = new FileService();
             LeftFileManager = new FileManager(leftWindow, archiveService, fileService);
             RightFileManager = new FileManager(rightWindow, archiveService, fileService, LeftFileManager);
+            LeftFileManager.AttachPathBar(leftPathTextBox);
+            RightFileManager.AttachPathBar(rightPathTextBox);
+
             LeftFileManager.Refresh();
             RightFileManager.Refresh();
         }
@@ -92,6 +95,21 @@ namespace SanityArchiver.forms
         private void LeftSetAttributeButton_Click(object sender, EventArgs e)
         {
             LeftFileManager.OnSetAttributeClicked();
+        }
+
+        private void RightMoveButton_Click(object sender, EventArgs e)
+        {
+            RightFileManager.OnMoveClicked();
+        }
+
+        private void RightCopyButton_Click(object sender, EventArgs e)
+        {
+            RightFileManager.OnCopyClicked();
+        }
+
+        private void RightSetAttributeButton_Click(object sender, EventArgs e)
+        {
+            RightFileManager.OnSetAttributeClicked();
         }
     }
 }

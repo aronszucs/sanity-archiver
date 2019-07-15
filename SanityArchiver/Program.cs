@@ -16,7 +16,7 @@ namespace SanityArchiver.forms
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FileViewForm());
+            Application.Run(new MainForm());
         }
     }
 }

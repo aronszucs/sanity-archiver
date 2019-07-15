@@ -1,6 +1,6 @@
 ﻿namespace SanityArchiver.forms
 {
-    partial class FileViewForm
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -39,6 +39,11 @@
             this.moveButton = new System.Windows.Forms.Button();
             this.copyButton = new System.Windows.Forms.Button();
             this.leftSetAttributeButton = new System.Windows.Forms.Button();
+            this.rightSetAttributeButton = new System.Windows.Forms.Button();
+            this.rightCopyButton = new System.Windows.Forms.Button();
+            this.rightMoveButton = new System.Windows.Forms.Button();
+            this.leftPathTextBox = new System.Windows.Forms.TextBox();
+            this.rightPathTextBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // leftWindow
@@ -155,11 +160,62 @@
             this.leftSetAttributeButton.UseVisualStyleBackColor = true;
             this.leftSetAttributeButton.Click += new System.EventHandler(this.LeftSetAttributeButton_Click);
             // 
-            // FileViewForm
+            // rightSetAttributeButton
+            // 
+            this.rightSetAttributeButton.Location = new System.Drawing.Point(969, 209);
+            this.rightSetAttributeButton.Name = "rightSetAttributeButton";
+            this.rightSetAttributeButton.Size = new System.Drawing.Size(83, 36);
+            this.rightSetAttributeButton.TabIndex = 13;
+            this.rightSetAttributeButton.Text = "Attr";
+            this.rightSetAttributeButton.UseVisualStyleBackColor = true;
+            this.rightSetAttributeButton.Click += new System.EventHandler(this.RightSetAttributeButton_Click);
+            // 
+            // rightCopyButton
+            // 
+            this.rightCopyButton.Location = new System.Drawing.Point(969, 167);
+            this.rightCopyButton.Name = "rightCopyButton";
+            this.rightCopyButton.Size = new System.Drawing.Size(83, 36);
+            this.rightCopyButton.TabIndex = 12;
+            this.rightCopyButton.Text = "Copy";
+            this.rightCopyButton.UseVisualStyleBackColor = true;
+            this.rightCopyButton.Click += new System.EventHandler(this.RightCopyButton_Click);
+            // 
+            // rightMoveButton
+            // 
+            this.rightMoveButton.Location = new System.Drawing.Point(969, 125);
+            this.rightMoveButton.Name = "rightMoveButton";
+            this.rightMoveButton.Size = new System.Drawing.Size(83, 36);
+            this.rightMoveButton.TabIndex = 11;
+            this.rightMoveButton.Text = "Move";
+            this.rightMoveButton.UseVisualStyleBackColor = true;
+            this.rightMoveButton.Click += new System.EventHandler(this.RightMoveButton_Click);
+            // 
+            // leftPathTextBox
+            // 
+            this.leftPathTextBox.Location = new System.Drawing.Point(69, 13);
+            this.leftPathTextBox.Name = "leftPathTextBox";
+            this.leftPathTextBox.ReadOnly = true;
+            this.leftPathTextBox.Size = new System.Drawing.Size(357, 22);
+            this.leftPathTextBox.TabIndex = 14;
+            // 
+            // rightPathTextBox
+            // 
+            this.rightPathTextBox.Location = new System.Drawing.Point(606, 11);
+            this.rightPathTextBox.Name = "rightPathTextBox";
+            this.rightPathTextBox.ReadOnly = true;
+            this.rightPathTextBox.Size = new System.Drawing.Size(357, 22);
+            this.rightPathTextBox.TabIndex = 15;
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1216, 493);
+            this.Controls.Add(this.rightPathTextBox);
+            this.Controls.Add(this.leftPathTextBox);
+            this.Controls.Add(this.rightSetAttributeButton);
+            this.Controls.Add(this.rightCopyButton);
+            this.Controls.Add(this.rightMoveButton);
             this.Controls.Add(this.leftSetAttributeButton);
             this.Controls.Add(this.copyButton);
             this.Controls.Add(this.moveButton);
@@ -171,9 +227,10 @@
             this.Controls.Add(this.leftArchiveButton);
             this.Controls.Add(this.rightWindow);
             this.Controls.Add(this.leftWindow);
-            this.Name = "FileViewForm";
+            this.Name = "MainForm";
             this.Text = "Form1";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -190,6 +247,11 @@
         private System.Windows.Forms.Button moveButton;
         private System.Windows.Forms.Button copyButton;
         private System.Windows.Forms.Button leftSetAttributeButton;
+        private System.Windows.Forms.Button rightSetAttributeButton;
+        private System.Windows.Forms.Button rightCopyButton;
+        private System.Windows.Forms.Button rightMoveButton;
+        private System.Windows.Forms.TextBox leftPathTextBox;
+        private System.Windows.Forms.TextBox rightPathTextBox;
     }
 }
 

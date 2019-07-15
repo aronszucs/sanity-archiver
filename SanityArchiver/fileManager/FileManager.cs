@@ -24,6 +24,7 @@ namespace SanityArchiver.fileManager
         private static readonly string DIRECTORY_SEPARATOR_SYMBOL = "----------------------";
         private static readonly string DEFAULT_STARTING_DIR = "C:\\filetest";
         private ListBox Window;
+        private TextBox PathBar;
 
         private ArchiveService ArchiveService;
         private FileService FileService;
@@ -61,6 +62,10 @@ namespace SanityArchiver.fileManager
             OnRootChangeRequested = new RootChangeRequest(fileManager.ChangeRoot);
             fileManager.OnRootChangeRequested = new RootChangeRequest(ChangeRoot);
         }
+        public void AttachPathBar(TextBox pathBarTextBox)
+        {
+            PathBar = pathBarTextBox;
+        }
         private void Init(ListBox listBox, ArchiveService archiver, FileService fileService)
         {
             Window = listBox;
@@ -91,6 +96,10 @@ namespace SanityArchiver.fileManager
             {
                 Window.Items.Add(fileInfo.Name);
                 Files.Add(fileInfo.Name, fileInfo);
+            }
+            if (PathBar != null)
+            {
+                PathBar.Text = RootDirInfo.FullName;
             }
         }
         public void RefreshBoth()
