@@ -11,6 +11,11 @@ namespace SanityArchiver.service
 {
     class FileService : AbstractService
     {
+        public DirectoryInfo RootDirInfo;
+        public FileService(string startingPath)
+        {
+            RootDirInfo = new DirectoryInfo(startingPath);
+        }
         public void Copy(ICollection<FileSystemInfo> items, DirectoryInfo destination)
         {
             foreach (FileSystemInfo item in items)
@@ -34,9 +39,9 @@ namespace SanityArchiver.service
                 {
                     File.Move(item.FullName, destination.FullName + "\\" + item.Name);
                 }
-                catch (IOException)
+                catch (IOException e)
                 {
-                    throw new ServiceException(item.Name + " already exists!");
+                    Prompter.HandleError(e);
                 }
             }
             OnResponse();
@@ -50,7 +55,7 @@ namespace SanityArchiver.service
             AttributeForm form = new AttributeForm(attrs, new AttributeForm.AttributeHandler(OnAttributeResponse));
         }
 
-        public void OnAttributeResponse(SettableAttributes attributes)
+        private void OnAttributeResponse(SettableAttributes attributes)
         {
             foreach (FileSystemInfo info in SentSources)
             {
@@ -69,6 +74,17 @@ namespace SanityArchiver.service
                     File.SetAttributes(path, File.GetAttributes(path) | FileAttributes.Archive);
                 }
             }
+        }
+        public void ChangeDrive()
+        {
+            DriveInfo[] drives = DriveInfo.GetDrives();
+            DriveForm df = new DriveForm(drives, OnChangeDriveResponse);
+        }
+        private void OnChangeDriveResponse(string drive)
+        {
+            RootDirInfo = new DirectoryInfo(drive);
+            
+            OnResponse();
         }
         private void RemoveSettableAttributes(string path)
         {
@@ -99,7 +115,6 @@ namespace SanityArchiver.service
                 }
             }
             return new SettableAttributes(isReadOnly, isHidden, isArchive);
-
         }
     }
 }

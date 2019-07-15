@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using SanityArchiver.prompter;
 
-namespace SanityArchiver.forms
+namespace SanityArchiver.form
 {
     public partial class InputPromptForm : Form
     {

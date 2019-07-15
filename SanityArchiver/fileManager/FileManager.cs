@@ -22,12 +22,12 @@ namespace SanityArchiver.fileManager
 
         private static readonly string PREV_DIRECTORY_SYMBOL = "..";
         private static readonly string DIRECTORY_SEPARATOR_SYMBOL = "----------------------";
-        private static readonly string DEFAULT_STARTING_DIR = "C:\\filetest";
         private ListBox Window;
         private TextBox PathBar;
 
         private ArchiveService ArchiveService;
         private FileService FileService;
+        private Prompter Prompter = Prompter.GetInstance();
         private DirectoryInfo RootDirInfo;
         private string[] LastSelectedItems;
         private string LastSelectedItem;
@@ -73,10 +73,29 @@ namespace SanityArchiver.fileManager
             ArchiveService.OnResponse = RefreshBoth;
             FileService = fileService;
             FileService.OnResponse = RefreshBoth;
-            RootDirInfo = new DirectoryInfo(DEFAULT_STARTING_DIR);
+            RootDirInfo = FileService.RootDirInfo;
             LastSelectedItems = new string[0];
         }
         public void Refresh()
+        {
+            try
+            {
+                TryRefresh();
+            } 
+            catch (IOException e)
+            {
+                Prompter.HandleError(e);
+            }
+            catch (NullReferenceException)
+            {
+                Prompter.HandleError("You are already in root");
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                Prompter.HandleError(e);
+            }
+        }
+        private void TryRefresh()
         {
             FileSystemInfo[] dirs = RootDirInfo.GetDirectories();
             FileSystemInfo[] files = RootDirInfo.GetFiles();
@@ -101,6 +120,7 @@ namespace SanityArchiver.fileManager
             {
                 PathBar.Text = RootDirInfo.FullName;
             }
+            FileService.RootDirInfo = RootDirInfo;
         }
         public void RefreshBoth()
         {
@@ -149,6 +169,16 @@ namespace SanityArchiver.fileManager
         public void OnSetAttributeClicked()
         {
             FileService.SetAttribute(GetSelected());
+        }
+        public void OnChangeDriveClicked()
+        {
+            DriveInfo[] drives = DriveInfo.GetDrives();
+            DriveForm df = new DriveForm(drives, OnChangeDriveResponse);
+        }
+        private void OnChangeDriveResponse(string drive)
+        {
+            RootDirInfo = new DirectoryInfo(drive);
+            Refresh();
         }
         public void OnSelectionChanged()
         {
@@ -201,51 +231,21 @@ namespace SanityArchiver.fileManager
         }
         public void Archive(ICollection<FileSystemInfo> sources)
         {
-            try
-            {
-                ArchiveService.Archive(sources, RootDirInfo);
-            }
-            catch (ServiceException e)
-            {
-                HandleError(e);
-            }
+             ArchiveService.Archive(sources, RootDirInfo);
         }
         public void Decompress(ICollection<FileSystemInfo> sources)
         {
-            try
-            {
-                ArchiveService.Decompress(sources, RootDirInfo);
-            }
-            catch (ServiceException e)
-            {
-                HandleError(e);
-            }
+             ArchiveService.Decompress(sources, RootDirInfo);
         }
         public void Move(ICollection<FileSystemInfo> items)
         {
-            try
-            {
-                FileService.Move(items, RootDirInfo);
-            }
-            catch (ServiceException e)
-            {
-                HandleError(e);
-            }
+            FileService.Move(items, RootDirInfo);
         }
         public void Copy(ICollection<FileSystemInfo> items)
         {
-            try
-            {
-                FileService.Copy(items, RootDirInfo);
-            }
-            catch (ServiceException e)
-            {
-                HandleError(e);
-            }
+            
+           FileService.Copy(items, RootDirInfo);
         }
-        private void HandleError(Exception e)
-        {
-            MessageForm mf = new MessageForm("Error", e.Message);
-        }
+        
     }
 }

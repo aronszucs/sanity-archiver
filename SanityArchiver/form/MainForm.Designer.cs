@@ -44,13 +44,15 @@
             this.rightMoveButton = new System.Windows.Forms.Button();
             this.leftPathTextBox = new System.Windows.Forms.TextBox();
             this.rightPathTextBox = new System.Windows.Forms.TextBox();
+            this.leftChangeDriveButton = new System.Windows.Forms.Button();
+            this.rightChangeDriveButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // leftWindow
             // 
             this.leftWindow.FormattingEnabled = true;
             this.leftWindow.ItemHeight = 16;
-            this.leftWindow.Location = new System.Drawing.Point(69, 39);
+            this.leftWindow.Location = new System.Drawing.Point(67, 64);
             this.leftWindow.Name = "leftWindow";
             this.leftWindow.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.leftWindow.Size = new System.Drawing.Size(357, 404);
@@ -62,7 +64,7 @@
             // 
             this.rightWindow.FormattingEnabled = true;
             this.rightWindow.ItemHeight = 16;
-            this.rightWindow.Location = new System.Drawing.Point(606, 39);
+            this.rightWindow.Location = new System.Drawing.Point(604, 64);
             this.rightWindow.Name = "rightWindow";
             this.rightWindow.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
             this.rightWindow.Size = new System.Drawing.Size(357, 404);
@@ -72,7 +74,7 @@
             // 
             // leftArchiveButton
             // 
-            this.leftArchiveButton.Location = new System.Drawing.Point(432, 39);
+            this.leftArchiveButton.Location = new System.Drawing.Point(430, 64);
             this.leftArchiveButton.Name = "leftArchiveButton";
             this.leftArchiveButton.Size = new System.Drawing.Size(83, 37);
             this.leftArchiveButton.TabIndex = 2;
@@ -82,7 +84,7 @@
             // 
             // rightArchiveButton
             // 
-            this.rightArchiveButton.Location = new System.Drawing.Point(969, 39);
+            this.rightArchiveButton.Location = new System.Drawing.Point(967, 64);
             this.rightArchiveButton.Name = "rightArchiveButton";
             this.rightArchiveButton.Size = new System.Drawing.Size(83, 37);
             this.rightArchiveButton.TabIndex = 3;
@@ -92,7 +94,7 @@
             // 
             // leftDecompressButton
             // 
-            this.leftDecompressButton.Location = new System.Drawing.Point(432, 82);
+            this.leftDecompressButton.Location = new System.Drawing.Point(430, 107);
             this.leftDecompressButton.Name = "leftDecompressButton";
             this.leftDecompressButton.Size = new System.Drawing.Size(83, 37);
             this.leftDecompressButton.TabIndex = 4;
@@ -102,7 +104,7 @@
             // 
             // rightDecompressButton
             // 
-            this.rightDecompressButton.Location = new System.Drawing.Point(969, 82);
+            this.rightDecompressButton.Location = new System.Drawing.Point(967, 107);
             this.rightDecompressButton.Name = "rightDecompressButton";
             this.rightDecompressButton.Size = new System.Drawing.Size(83, 37);
             this.rightDecompressButton.TabIndex = 5;
@@ -112,7 +114,7 @@
             // 
             // leftRootAlignButton
             // 
-            this.leftRootAlignButton.Location = new System.Drawing.Point(444, 355);
+            this.leftRootAlignButton.Location = new System.Drawing.Point(442, 380);
             this.leftRootAlignButton.Name = "leftRootAlignButton";
             this.leftRootAlignButton.Size = new System.Drawing.Size(147, 33);
             this.leftRootAlignButton.TabIndex = 6;
@@ -122,7 +124,7 @@
             // 
             // rightRootAlignButton
             // 
-            this.rightRootAlignButton.Location = new System.Drawing.Point(444, 410);
+            this.rightRootAlignButton.Location = new System.Drawing.Point(442, 435);
             this.rightRootAlignButton.Name = "rightRootAlignButton";
             this.rightRootAlignButton.Size = new System.Drawing.Size(147, 33);
             this.rightRootAlignButton.TabIndex = 7;
@@ -132,7 +134,7 @@
             // 
             // moveButton
             // 
-            this.moveButton.Location = new System.Drawing.Point(432, 125);
+            this.moveButton.Location = new System.Drawing.Point(430, 150);
             this.moveButton.Name = "moveButton";
             this.moveButton.Size = new System.Drawing.Size(83, 36);
             this.moveButton.TabIndex = 8;
@@ -142,7 +144,7 @@
             // 
             // copyButton
             // 
-            this.copyButton.Location = new System.Drawing.Point(432, 167);
+            this.copyButton.Location = new System.Drawing.Point(430, 192);
             this.copyButton.Name = "copyButton";
             this.copyButton.Size = new System.Drawing.Size(83, 36);
             this.copyButton.TabIndex = 9;
@@ -152,7 +154,7 @@
             // 
             // leftSetAttributeButton
             // 
-            this.leftSetAttributeButton.Location = new System.Drawing.Point(432, 209);
+            this.leftSetAttributeButton.Location = new System.Drawing.Point(430, 234);
             this.leftSetAttributeButton.Name = "leftSetAttributeButton";
             this.leftSetAttributeButton.Size = new System.Drawing.Size(83, 36);
             this.leftSetAttributeButton.TabIndex = 10;
@@ -162,7 +164,7 @@
             // 
             // rightSetAttributeButton
             // 
-            this.rightSetAttributeButton.Location = new System.Drawing.Point(969, 209);
+            this.rightSetAttributeButton.Location = new System.Drawing.Point(967, 234);
             this.rightSetAttributeButton.Name = "rightSetAttributeButton";
             this.rightSetAttributeButton.Size = new System.Drawing.Size(83, 36);
             this.rightSetAttributeButton.TabIndex = 13;
@@ -172,7 +174,7 @@
             // 
             // rightCopyButton
             // 
-            this.rightCopyButton.Location = new System.Drawing.Point(969, 167);
+            this.rightCopyButton.Location = new System.Drawing.Point(967, 192);
             this.rightCopyButton.Name = "rightCopyButton";
             this.rightCopyButton.Size = new System.Drawing.Size(83, 36);
             this.rightCopyButton.TabIndex = 12;
@@ -182,7 +184,7 @@
             // 
             // rightMoveButton
             // 
-            this.rightMoveButton.Location = new System.Drawing.Point(969, 125);
+            this.rightMoveButton.Location = new System.Drawing.Point(967, 150);
             this.rightMoveButton.Name = "rightMoveButton";
             this.rightMoveButton.Size = new System.Drawing.Size(83, 36);
             this.rightMoveButton.TabIndex = 11;
@@ -192,7 +194,7 @@
             // 
             // leftPathTextBox
             // 
-            this.leftPathTextBox.Location = new System.Drawing.Point(69, 13);
+            this.leftPathTextBox.Location = new System.Drawing.Point(67, 38);
             this.leftPathTextBox.Name = "leftPathTextBox";
             this.leftPathTextBox.ReadOnly = true;
             this.leftPathTextBox.Size = new System.Drawing.Size(357, 22);
@@ -200,17 +202,39 @@
             // 
             // rightPathTextBox
             // 
-            this.rightPathTextBox.Location = new System.Drawing.Point(606, 11);
+            this.rightPathTextBox.Location = new System.Drawing.Point(604, 36);
             this.rightPathTextBox.Name = "rightPathTextBox";
             this.rightPathTextBox.ReadOnly = true;
             this.rightPathTextBox.Size = new System.Drawing.Size(357, 22);
             this.rightPathTextBox.TabIndex = 15;
+            // 
+            // leftChangeDriveButton
+            // 
+            this.leftChangeDriveButton.Location = new System.Drawing.Point(67, 4);
+            this.leftChangeDriveButton.Name = "leftChangeDriveButton";
+            this.leftChangeDriveButton.Size = new System.Drawing.Size(133, 28);
+            this.leftChangeDriveButton.TabIndex = 16;
+            this.leftChangeDriveButton.Text = "Change drive";
+            this.leftChangeDriveButton.UseVisualStyleBackColor = true;
+            this.leftChangeDriveButton.Click += new System.EventHandler(this.LeftChangeDriveButton_Click);
+            // 
+            // rightChangeDriveButton
+            // 
+            this.rightChangeDriveButton.Location = new System.Drawing.Point(604, 2);
+            this.rightChangeDriveButton.Name = "rightChangeDriveButton";
+            this.rightChangeDriveButton.Size = new System.Drawing.Size(133, 28);
+            this.rightChangeDriveButton.TabIndex = 17;
+            this.rightChangeDriveButton.Text = "Change drive";
+            this.rightChangeDriveButton.UseVisualStyleBackColor = true;
+            this.rightChangeDriveButton.Click += new System.EventHandler(this.RightChangeDriveButton_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1216, 493);
+            this.Controls.Add(this.rightChangeDriveButton);
+            this.Controls.Add(this.leftChangeDriveButton);
             this.Controls.Add(this.rightPathTextBox);
             this.Controls.Add(this.leftPathTextBox);
             this.Controls.Add(this.rightSetAttributeButton);
@@ -252,6 +276,8 @@
         private System.Windows.Forms.Button rightMoveButton;
         private System.Windows.Forms.TextBox leftPathTextBox;
         private System.Windows.Forms.TextBox rightPathTextBox;
+        private System.Windows.Forms.Button leftChangeDriveButton;
+        private System.Windows.Forms.Button rightChangeDriveButton;
     }
 }
 

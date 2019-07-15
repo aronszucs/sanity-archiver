@@ -3,28 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SanityArchiver.forms;
+using SanityArchiver.form;
 
 namespace SanityArchiver.prompter
 {
     public class Prompter
     {
         public delegate void InputHandler(string input);
+        private static Prompter Instance = new Prompter();
+        public static Prompter GetInstance()
+        {
+            return Instance;
+        }
 
-
-        public static void HandleInput(string message, InputHandler okButtonClick)
+        public void HandleInput(string message, InputHandler okButtonClick)
         {
             InputPromptForm inp = new InputPromptForm(message, null, okButtonClick);
             inp.Show();
         }
-        public static void HandleInput(string message, string defaultValue, InputHandler okButtonClick)
+        public void HandleInput(string message, string defaultValue, InputHandler okButtonClick)
         {
             InputPromptForm inp = new InputPromptForm(message, defaultValue, okButtonClick);
             inp.Show();
         }
-        public static void HandleError(string message)
+        public void HandleError(Exception e)
         {
-
+            HandleError(e.Message);
+        }
+        public void HandleError(string msg)
+        {
+            MessageForm mf = new MessageForm("Error", msg);
         }
     }
 }

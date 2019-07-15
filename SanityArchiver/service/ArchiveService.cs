@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using SanityArchiver.archiver;
 using SanityArchiver.forms;
-
+using SanityArchiver.prompter;
 
 namespace SanityArchiver.service
 {
@@ -22,12 +22,24 @@ namespace SanityArchiver.service
         }
         public void Archive(ICollection<FileSystemInfo> sources, DirectoryInfo rootDirInfo)
         {
-            RootDirInfo = rootDirInfo;
-            SentSources = sources;
-            ArchiverForm af = new ArchiverForm
-                (OnArchiveNameInputResponse,
-                 SentSources.ElementAt(0).Name + ".zip");
-            af.Show();
+            try
+            {
+                RootDirInfo = rootDirInfo;
+                SentSources = sources;
+                ArchiverForm af = new ArchiverForm
+                    (OnArchiveNameInputResponse,
+                     SentSources.ElementAt(0).Name + ".zip");
+                af.Show();
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                Prompter.HandleError(e);
+            }
+            catch (IOException e)
+            {
+                Prompter.HandleError(e);
+            }
+
         }
         public void OnArchiveNameInputResponse(string input, string password)
         {
@@ -41,12 +53,19 @@ namespace SanityArchiver.service
         }
         public void Decompress(ICollection<FileSystemInfo> sources, DirectoryInfo rootDirInfo)
         {
-            RootDirInfo = rootDirInfo;
-            SentSources = sources;
-            ArchiverForm af = new ArchiverForm
-                (OnDecompressInputResponse,
-                 SentSources.ElementAt(0).Name);
-            af.Show();
+            try
+            {
+                RootDirInfo = rootDirInfo;
+                SentSources = sources;
+                ArchiverForm af = new ArchiverForm
+                    (OnDecompressInputResponse,
+                     SentSources.ElementAt(0).Name);
+                af.Show();
+            }
+            catch (IOException e)
+            {
+                Prompter.HandleError(e);
+            }
         }
         public void OnDecompressInputResponse(string input, string password)
         {
@@ -60,7 +79,7 @@ namespace SanityArchiver.service
             }
             catch (IOException e)
             {
-                throw new ServiceException(e.Message);
+                Prompter.HandleError(e);
             }
             Archiver.DisableEncryption();
             OnResponse();

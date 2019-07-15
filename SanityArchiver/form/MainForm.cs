@@ -22,7 +22,7 @@ namespace SanityArchiver.forms
             InitializeComponent();
             IArchiver archiver = new DotnetZipArchiver();
             ArchiveService archiveService = new ArchiveService(archiver);
-            FileService fileService = new FileService();
+            FileService fileService = new FileService("c:\\");
             LeftFileManager = new FileManager(leftWindow, archiveService, fileService);
             RightFileManager = new FileManager(rightWindow, archiveService, fileService, LeftFileManager);
             LeftFileManager.AttachPathBar(leftPathTextBox);
@@ -110,6 +110,16 @@ namespace SanityArchiver.forms
         private void RightSetAttributeButton_Click(object sender, EventArgs e)
         {
             RightFileManager.OnSetAttributeClicked();
+        }
+
+        private void LeftChangeDriveButton_Click(object sender, EventArgs e)
+        {
+            LeftFileManager.OnChangeDriveClicked();
+        }
+
+        private void RightChangeDriveButton_Click(object sender, EventArgs e)
+        {
+            RightFileManager.OnChangeDriveClicked();
         }
     }
 }

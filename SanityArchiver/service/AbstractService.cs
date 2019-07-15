@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using SanityArchiver.prompter;
 
 namespace SanityArchiver.service
 {
@@ -12,6 +13,8 @@ namespace SanityArchiver.service
         public delegate void RefreshHandler();
         public RefreshHandler OnResponse;
         protected ICollection<FileSystemInfo> SentSources;
+        protected Prompter Prompter = Prompter.GetInstance();
+
 
     }
 }
