@@ -33,21 +33,6 @@ namespace SanityArchiver.forms
             RightFileManager.Refresh();
         }
 
-        private void LeftWindow_DoubleClick(object sender, MouseEventArgs e)
-        {
-            LeftFileManager.OnItemDoubleClick();
-        }
-
-        private void LeftWindow_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            LeftFileManager.OnSelectionChanged();
-        }
-
-        private void RightWindow_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            RightFileManager.OnSelectionChanged();
-        }
-
         private void RightWindow_DoubleClick(object sender, EventArgs e)
         {
             RightFileManager.OnItemDoubleClick();
@@ -121,6 +106,16 @@ namespace SanityArchiver.forms
         private void RightChangeDriveButton_Click(object sender, EventArgs e)
         {
             RightFileManager.OnChangeDriveClicked();
+        }
+
+        private void LeftWindow_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            LeftFileManager.OnItemDoubleClick();
+        }
+
+        private void LeftWindow_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            LeftFileManager.OnSelectionChanged();
         }
     }
 }

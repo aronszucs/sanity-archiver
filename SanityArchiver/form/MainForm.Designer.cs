@@ -1,4 +1,8 @@
-﻿namespace SanityArchiver.forms
+﻿using System.Windows.Forms;
+
+
+
+namespace SanityArchiver.forms
 {
     partial class MainForm
     {
@@ -28,8 +32,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.leftWindow = new System.Windows.Forms.ListBox();
-            this.rightWindow = new System.Windows.Forms.ListBox();
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            "",
+            "",
+            ""}, -1);
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            "",
+            "",
+            ""}, -1);
             this.leftArchiveButton = new System.Windows.Forms.Button();
             this.rightArchiveButton = new System.Windows.Forms.Button();
             this.leftDecompressButton = new System.Windows.Forms.Button();
@@ -46,31 +56,13 @@
             this.rightPathTextBox = new System.Windows.Forms.TextBox();
             this.leftChangeDriveButton = new System.Windows.Forms.Button();
             this.rightChangeDriveButton = new System.Windows.Forms.Button();
+            this.leftWindow = new System.Windows.Forms.ListView();
+            this.file = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.size = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.rightWindow = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
-            // 
-            // leftWindow
-            // 
-            this.leftWindow.FormattingEnabled = true;
-            this.leftWindow.ItemHeight = 16;
-            this.leftWindow.Location = new System.Drawing.Point(67, 64);
-            this.leftWindow.Name = "leftWindow";
-            this.leftWindow.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.leftWindow.Size = new System.Drawing.Size(357, 404);
-            this.leftWindow.TabIndex = 0;
-            this.leftWindow.SelectedIndexChanged += new System.EventHandler(this.LeftWindow_SelectedIndexChanged);
-            this.leftWindow.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LeftWindow_DoubleClick);
-            // 
-            // rightWindow
-            // 
-            this.rightWindow.FormattingEnabled = true;
-            this.rightWindow.ItemHeight = 16;
-            this.rightWindow.Location = new System.Drawing.Point(604, 64);
-            this.rightWindow.Name = "rightWindow";
-            this.rightWindow.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.rightWindow.Size = new System.Drawing.Size(357, 404);
-            this.rightWindow.TabIndex = 1;
-            this.rightWindow.SelectedIndexChanged += new System.EventHandler(this.RightWindow_SelectedIndexChanged);
-            this.rightWindow.DoubleClick += new System.EventHandler(this.RightWindow_DoubleClick);
             // 
             // leftArchiveButton
             // 
@@ -228,11 +220,64 @@
             this.rightChangeDriveButton.UseVisualStyleBackColor = true;
             this.rightChangeDriveButton.Click += new System.EventHandler(this.RightChangeDriveButton_Click);
             // 
+            // leftWindow
+            // 
+            this.leftWindow.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.file,
+            this.size});
+            this.leftWindow.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1});
+            this.leftWindow.Location = new System.Drawing.Point(67, 66);
+            this.leftWindow.Name = "leftWindow";
+            this.leftWindow.Size = new System.Drawing.Size(357, 402);
+            this.leftWindow.TabIndex = 18;
+            this.leftWindow.UseCompatibleStateImageBehavior = false;
+            this.leftWindow.View = System.Windows.Forms.View.Details;
+            this.leftWindow.SelectedIndexChanged += new System.EventHandler(this.LeftWindow_SelectedIndexChanged);
+            this.leftWindow.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.LeftWindow_MouseDoubleClick);
+            // 
+            // file
+            // 
+            this.file.Text = "Item";
+            this.file.Width = 179;
+            // 
+            // size
+            // 
+            this.size.Text = "Size";
+            this.size.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.size.Width = 88;
+            // 
+            // rightWindow
+            // 
+            this.rightWindow.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2});
+            this.rightWindow.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem2});
+            this.rightWindow.Location = new System.Drawing.Point(604, 66);
+            this.rightWindow.Name = "rightWindow";
+            this.rightWindow.Size = new System.Drawing.Size(357, 402);
+            this.rightWindow.TabIndex = 19;
+            this.rightWindow.UseCompatibleStateImageBehavior = false;
+            this.rightWindow.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Item";
+            this.columnHeader1.Width = 169;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Size";
+            this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1216, 493);
+            this.Controls.Add(this.rightWindow);
+            this.Controls.Add(this.leftWindow);
             this.Controls.Add(this.rightChangeDriveButton);
             this.Controls.Add(this.leftChangeDriveButton);
             this.Controls.Add(this.rightPathTextBox);
@@ -249,8 +294,6 @@
             this.Controls.Add(this.leftDecompressButton);
             this.Controls.Add(this.rightArchiveButton);
             this.Controls.Add(this.leftArchiveButton);
-            this.Controls.Add(this.rightWindow);
-            this.Controls.Add(this.leftWindow);
             this.Name = "MainForm";
             this.Text = "WinSanity Archiver";
             this.ResumeLayout(false);
@@ -259,9 +302,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox leftWindow;
-        private System.Windows.Forms.ListBox rightWindow;
         private System.Windows.Forms.Button leftArchiveButton;
         private System.Windows.Forms.Button rightArchiveButton;
         private System.Windows.Forms.Button leftDecompressButton;
@@ -278,6 +318,12 @@
         private System.Windows.Forms.TextBox rightPathTextBox;
         private System.Windows.Forms.Button leftChangeDriveButton;
         private System.Windows.Forms.Button rightChangeDriveButton;
+        private System.Windows.Forms.ListView leftWindow;
+        private System.Windows.Forms.ColumnHeader file;
+        private System.Windows.Forms.ColumnHeader size;
+        private ListView rightWindow;
+        private ColumnHeader columnHeader1;
+        private ColumnHeader columnHeader2;
     }
 }
 

@@ -14,7 +14,5 @@ namespace SanityArchiver.service
         public RefreshHandler OnResponse;
         protected ICollection<FileSystemInfo> SentSources;
         protected Prompter Prompter = Prompter.GetInstance();
-
-
     }
 }

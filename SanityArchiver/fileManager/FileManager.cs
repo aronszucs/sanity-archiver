@@ -23,7 +23,7 @@ namespace SanityArchiver.fileManager
 
         private static readonly string PREV_DIRECTORY_SYMBOL = "..";
         private static readonly string DIRECTORY_SEPARATOR_SYMBOL = "----------------------";
-        private ListBox Window;
+        private ListView Window;
         private TextBox PathBar;
 
         private ArchiveService ArchiveService;
@@ -38,11 +38,11 @@ namespace SanityArchiver.fileManager
         public delegate void RefreshRequest();
         public delegate void RootChangeRequest(DirectoryInfo dirInfo);
 
-        public FileManager(ListBox listBox, ArchiveService archiver, FileService fileService)
+        public FileManager(ListView listBox, ArchiveService archiver, FileService fileService)
         {
             Init(listBox, archiver, fileService);
         }
-        public FileManager(ListBox listBox, ArchiveService archiver, FileService fileService, FileManager fileManager)
+        public FileManager(ListView listBox, ArchiveService archiver, FileService fileService, FileManager fileManager)
         {
             Init(listBox, archiver, fileService);
             OnArchiveRequested = new FileSystemRequest(fileManager.Archive);
@@ -67,7 +67,7 @@ namespace SanityArchiver.fileManager
         {
             PathBar = pathBarTextBox;
         }
-        private void Init(ListBox listBox, ArchiveService archiver, FileService fileService)
+        private void Init(ListView listBox, ArchiveService archiver, FileService fileService)
         {
             Window = listBox;
             ArchiveService = archiver;
@@ -130,11 +130,12 @@ namespace SanityArchiver.fileManager
         private List<FileSystemInfo> GetSelected()
         {
             List<FileSystemInfo> selected = new List<FileSystemInfo>();
-            foreach (string item in Window.SelectedItems)
+            foreach (ListViewItem item in Window.SelectedItems)
             {
+                string name = item.Text;
                 try
                 {
-                    selected.Add(Files[item]);
+                    selected.Add(Files[name]);
                 }
                 catch (KeyNotFoundException)
                 {
@@ -146,7 +147,8 @@ namespace SanityArchiver.fileManager
         public void OnItemDoubleClick()
         {
             Window.SelectedItems.Clear();
-            Window.SelectedItem = LastSelectedItem;
+            // Window.SelectedItem = LastSelectedItem;
+
             NavigateTo(LastSelectedItem);
         }
 
@@ -182,18 +184,21 @@ namespace SanityArchiver.fileManager
         }
         public void OnSelectionChanged()
         {
-            foreach (string item in Window.SelectedItems)
+            foreach (ListViewItem item in Window.SelectedItems)
             {
-                if (!LastSelectedItems.Contains(item))
+                string name = item.Text;
+                if (!LastSelectedItems.Contains(name))
                 {
-                    LastSelectedItem = item;
+                    LastSelectedItem = name;
                 }
             }
             LastSelectedItems = new string[Window.SelectedItems.Count];
             int i = 0;
-            foreach (string item in Window.SelectedItems)
+            foreach (ListViewItem item in Window.SelectedItems)
             {
-                LastSelectedItems[i] = item;
+                string name = item.Text;
+
+                LastSelectedItems[i] = name;
                 i++;
             }
         }
@@ -243,9 +248,7 @@ namespace SanityArchiver.fileManager
         }
         public void Copy(ICollection<FileSystemInfo> items)
         {
-            
            FileService.Copy(items, Root.Path);
         }
-        
     }
 }
