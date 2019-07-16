@@ -252,7 +252,7 @@
             this.Controls.Add(this.rightWindow);
             this.Controls.Add(this.leftWindow);
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "WinSanity Archiver";
             this.ResumeLayout(false);
             this.PerformLayout();
 

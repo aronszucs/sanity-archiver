@@ -55,7 +55,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(494, 90);
+            this.ClientSize = new System.Drawing.Size(684, 90);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.messageLabel);
             this.Name = "MessageForm";

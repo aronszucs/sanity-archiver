@@ -88,7 +88,7 @@
             this.Controls.Add(this.passwordTextBox);
             this.Controls.Add(this.nameTextBox);
             this.Name = "ArchiverForm";
-            this.Text = "Form1";
+            this.Text = "Archive";
             this.ResumeLayout(false);
             this.PerformLayout();
 

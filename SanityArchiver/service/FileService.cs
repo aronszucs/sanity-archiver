@@ -11,10 +11,10 @@ namespace SanityArchiver.service
 {
     class FileService : AbstractService
     {
-        public DirectoryInfo RootDirInfo;
-        public FileService(string startingPath)
+        public FilePathContainer Root {get; private set; }
+        public FileService(FilePathContainer filePathContainer)
         {
-            RootDirInfo = new DirectoryInfo(startingPath);
+            Root = filePathContainer;
         }
         public void Copy(ICollection<FileSystemInfo> items, DirectoryInfo destination)
         {
@@ -26,7 +26,7 @@ namespace SanityArchiver.service
                 }
                 catch (IOException)
                 {
-                    throw new ServiceException(item.Name + " already exists!");
+                    Prompter.HandleError(item.Name + " already exists!");
                 }
             }
             OnResponse();
@@ -82,7 +82,7 @@ namespace SanityArchiver.service
         }
         private void OnChangeDriveResponse(string drive)
         {
-            RootDirInfo = new DirectoryInfo(drive);
+            Root.Path = new DirectoryInfo(drive);
             
             OnResponse();
         }

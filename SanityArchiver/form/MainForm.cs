@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using SanityArchiver.service;
 using SanityArchiver.fileManager;
 using SanityArchiver.archiver;
+using SanityArchiver.data;
 
 namespace SanityArchiver.forms
 {
@@ -22,7 +23,7 @@ namespace SanityArchiver.forms
             InitializeComponent();
             IArchiver archiver = new DotnetZipArchiver();
             ArchiveService archiveService = new ArchiveService(archiver);
-            FileService fileService = new FileService("c:\\");
+            FileService fileService = new FileService(new FilePathContainer("c:\\"));
             LeftFileManager = new FileManager(leftWindow, archiveService, fileService);
             RightFileManager = new FileManager(rightWindow, archiveService, fileService, LeftFileManager);
             LeftFileManager.AttachPathBar(leftPathTextBox);

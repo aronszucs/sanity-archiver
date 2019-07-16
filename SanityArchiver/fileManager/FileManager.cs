@@ -8,6 +8,7 @@ using System.IO;
 using SanityArchiver.service;
 using SanityArchiver.prompter;
 using SanityArchiver.form;
+using SanityArchiver.data;
 
 namespace SanityArchiver.fileManager
 {
@@ -28,7 +29,7 @@ namespace SanityArchiver.fileManager
         private ArchiveService ArchiveService;
         private FileService FileService;
         private Prompter Prompter = Prompter.GetInstance();
-        private DirectoryInfo RootDirInfo;
+        private FilePathContainer Root;
         private string[] LastSelectedItems;
         private string LastSelectedItem;
         private Dictionary<string, FileSystemInfo> Files = new Dictionary<string, FileSystemInfo>();
@@ -73,7 +74,7 @@ namespace SanityArchiver.fileManager
             ArchiveService.OnResponse = RefreshBoth;
             FileService = fileService;
             FileService.OnResponse = RefreshBoth;
-            RootDirInfo = FileService.RootDirInfo;
+            Root = FileService.Root;
             LastSelectedItems = new string[0];
         }
         public void Refresh()
@@ -97,8 +98,8 @@ namespace SanityArchiver.fileManager
         }
         private void TryRefresh()
         {
-            FileSystemInfo[] dirs = RootDirInfo.GetDirectories();
-            FileSystemInfo[] files = RootDirInfo.GetFiles();
+            FileSystemInfo[] dirs = Root.Path.GetDirectories();
+            FileSystemInfo[] files = Root.Path.GetFiles();
             FileSystemInfo[] fileSystems = new FileSystemInfo[dirs.Length + files.Length];
             Array.Copy(dirs, 0, fileSystems, 0, dirs.Length);
             Array.Copy(files, 0, fileSystems, dirs.Length, files.Length);
@@ -118,9 +119,8 @@ namespace SanityArchiver.fileManager
             }
             if (PathBar != null)
             {
-                PathBar.Text = RootDirInfo.FullName;
+                PathBar.Text = Root.Path.FullName;
             }
-            FileService.RootDirInfo = RootDirInfo;
         }
         public void RefreshBoth()
         {
@@ -177,7 +177,7 @@ namespace SanityArchiver.fileManager
         }
         private void OnChangeDriveResponse(string drive)
         {
-            RootDirInfo = new DirectoryInfo(drive);
+            Root.Path = new DirectoryInfo(drive);
             Refresh();
         }
         public void OnSelectionChanged()
@@ -199,19 +199,19 @@ namespace SanityArchiver.fileManager
         }
         public void OnAlignRootClicked()
         {
-            OnRootChangeRequested(RootDirInfo);
+            OnRootChangeRequested(Root.Path);
         }
         private void NavigateTo(String dirName)
         {
             if (dirName.Equals(PREV_DIRECTORY_SYMBOL))
             {
-                RootDirInfo = RootDirInfo.Parent;
+                Root.Path = Root.Path.Parent;
             } else
             {
                 try
                 {
                     DirectoryInfo dirInfo = (DirectoryInfo)Files[dirName];
-                    RootDirInfo = new DirectoryInfo(dirInfo.FullName);
+                    Root.Path = new DirectoryInfo(dirInfo.FullName);
                 }
                 catch (InvalidCastException) {}
                 catch (KeyNotFoundException) { }
@@ -220,31 +220,31 @@ namespace SanityArchiver.fileManager
         }
         public void ChangeRoot(DirectoryInfo dirInfo)
         {
-            RootDirInfo = dirInfo;
+            Root.Path = dirInfo;
             Refresh();
         }
 
         public void NavigateTo(DirectoryInfo dirInfo)
         {
-            RootDirInfo = dirInfo;
+            Root.Path = dirInfo;
             Refresh();
         }
         public void Archive(ICollection<FileSystemInfo> sources)
         {
-             ArchiveService.Archive(sources, RootDirInfo);
+             ArchiveService.Archive(sources, Root.Path);
         }
         public void Decompress(ICollection<FileSystemInfo> sources)
         {
-             ArchiveService.Decompress(sources, RootDirInfo);
+             ArchiveService.Decompress(sources, Root.Path);
         }
         public void Move(ICollection<FileSystemInfo> items)
         {
-            FileService.Move(items, RootDirInfo);
+            FileService.Move(items, Root.Path);
         }
         public void Copy(ICollection<FileSystemInfo> items)
         {
             
-           FileService.Copy(items, RootDirInfo);
+           FileService.Copy(items, Root.Path);
         }
         
     }
