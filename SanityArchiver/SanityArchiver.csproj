@@ -52,6 +52,7 @@
     <Compile Include="archiver\ArchiverException.cs" />
     <Compile Include="archiver\AbstractArchiver.cs" />
     <Compile Include="archiver\DotnetZipArchiver.cs" />
+    <Compile Include="data\Class1.cs" />
     <Compile Include="data\PathContainer.cs" />
     <Compile Include="fileManager\FileManagerException.cs" />
     <Compile Include="form\ArchiverForm.cs">
@@ -71,6 +72,12 @@
     </Compile>
     <Compile Include="form\DriveForm.Designer.cs">
       <DependentUpon>DriveForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="form\PropertyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="form\PropertyForm.Designer.cs">
+      <DependentUpon>PropertyForm.cs</DependentUpon>
     </Compile>
     <Compile Include="form\MessageForm.cs">
       <SubType>Form</SubType>
@@ -99,6 +106,7 @@
     <Compile Include="service\ArchiveService.cs" />
     <Compile Include="service\AbstractService.cs" />
     <Compile Include="data\SettableAttributes.cs" />
+    <Compile Include="service\DirSizeCalculator.cs" />
     <Compile Include="service\FileService.cs" />
     <EmbeddedResource Include="form\ArchiverForm.resx">
       <DependentUpon>ArchiverForm.cs</DependentUpon>
@@ -117,6 +125,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="form\InputPromptForm.resx">
       <DependentUpon>InputPromptForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="form\PropertyForm.resx">
+      <DependentUpon>PropertyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -13,6 +13,7 @@ namespace SanityArchiver.service
         public delegate void RefreshHandler();
         public RefreshHandler OnResponse;
         protected ICollection<FileSystemInfo> SentSources;
+        protected FileSystemInfo SentSource;
         protected Prompter Prompter = Prompter.GetInstance();
     }
 }

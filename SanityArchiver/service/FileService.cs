@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 using System.IO;
 using SanityArchiver.form;
 using SanityArchiver.data;
+using System.Threading;
 
 namespace SanityArchiver.service
 {
     class FileService : AbstractService
     {
         public FilePathContainer Root {get; private set; }
+        private bool AbortCalculation = false;
         public FileService(FilePathContainer filePathContainer)
         {
             Root = filePathContainer;
@@ -49,9 +51,21 @@ namespace SanityArchiver.service
         public void ViewProperty(ICollection<FileSystemInfo> infos)
         {
             FileSystemInfo info = infos.ElementAt(0);
-            long size = GetSize(info);
-            Prompter.DisplayMessage("Size", size.ToString());
+            try
+            {
+                DirectoryInfo dir = (DirectoryInfo)info;
+                DirSizeCalculator calc = new DirSizeCalculator();
+                PropertyForm pr = new PropertyForm(dir.Name, calc.RequestData, calc.Terminate);
+                calc.Calculate(dir);
+            }
+            catch (InvalidCastException)
+            {
+                FileInfo file = (FileInfo)info;
+                long size = file.Length;
+                PropertyForm pr = new PropertyForm(file.Name, 1, size);
+            }
         }
+        
         public void SetAttribute(ICollection<FileSystemInfo> items)
         {
             SentSources = items;
@@ -81,51 +95,9 @@ namespace SanityArchiver.service
                 }
             }
         }
-        public void ChangeDrive()
-        {
-            DriveInfo[] drives = DriveInfo.GetDrives();
-            DriveForm df = new DriveForm(drives, OnChangeDriveResponse);
-        }
-
-
-        public long GetSize(FileSystemInfo element)
-        {
-            try
-            {
-                FileInfo file = (FileInfo)element;
-                return file.Length;
-            }
-            catch (InvalidCastException)
-            {
-                DirectoryInfo dir = (DirectoryInfo)element;
-                return GetRecursiveSize(dir, 0);
-            }
-        }
         
-        private long GetRecursiveSize(DirectoryInfo root, long size)
-        {
-            FileSystemInfo[] elements = root.GetFileSystemInfos();
-            foreach (FileSystemInfo info in elements)
-            {
-                try
-                {
-                    DirectoryInfo dir = (DirectoryInfo)info;
-                    size += GetRecursiveSize(dir, size);
-                }
-                catch (InvalidCastException)
-                {
-                    FileInfo file = (FileInfo)info;
-                    size += file.Length;
-                }
-            }
-            return size;
-        }
-        private void OnChangeDriveResponse(string drive)
-        {
-            Root.Path = new DirectoryInfo(drive);
-            
-            OnResponse();
-        }
+       
+        
         private void RemoveSettableAttributes(string path)
         {
             File.SetAttributes(path, File.GetAttributes(path) & ~FileAttributes.ReadOnly);
