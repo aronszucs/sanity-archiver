@@ -32,11 +32,11 @@ namespace SanityArchiver.forms
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "",
             ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "",
             ""}, -1);
@@ -62,11 +62,12 @@ namespace SanityArchiver.forms
             this.rightWindow = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.leftPropertyButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // leftArchiveButton
             // 
-            this.leftArchiveButton.Location = new System.Drawing.Point(430, 64);
+            this.leftArchiveButton.Location = new System.Drawing.Point(515, 77);
             this.leftArchiveButton.Name = "leftArchiveButton";
             this.leftArchiveButton.Size = new System.Drawing.Size(83, 37);
             this.leftArchiveButton.TabIndex = 2;
@@ -76,7 +77,7 @@ namespace SanityArchiver.forms
             // 
             // rightArchiveButton
             // 
-            this.rightArchiveButton.Location = new System.Drawing.Point(967, 64);
+            this.rightArchiveButton.Location = new System.Drawing.Point(1121, 79);
             this.rightArchiveButton.Name = "rightArchiveButton";
             this.rightArchiveButton.Size = new System.Drawing.Size(83, 37);
             this.rightArchiveButton.TabIndex = 3;
@@ -86,7 +87,7 @@ namespace SanityArchiver.forms
             // 
             // leftDecompressButton
             // 
-            this.leftDecompressButton.Location = new System.Drawing.Point(430, 107);
+            this.leftDecompressButton.Location = new System.Drawing.Point(515, 120);
             this.leftDecompressButton.Name = "leftDecompressButton";
             this.leftDecompressButton.Size = new System.Drawing.Size(83, 37);
             this.leftDecompressButton.TabIndex = 4;
@@ -96,7 +97,7 @@ namespace SanityArchiver.forms
             // 
             // rightDecompressButton
             // 
-            this.rightDecompressButton.Location = new System.Drawing.Point(967, 107);
+            this.rightDecompressButton.Location = new System.Drawing.Point(1121, 122);
             this.rightDecompressButton.Name = "rightDecompressButton";
             this.rightDecompressButton.Size = new System.Drawing.Size(83, 37);
             this.rightDecompressButton.TabIndex = 5;
@@ -106,9 +107,9 @@ namespace SanityArchiver.forms
             // 
             // leftRootAlignButton
             // 
-            this.leftRootAlignButton.Location = new System.Drawing.Point(442, 380);
+            this.leftRootAlignButton.Location = new System.Drawing.Point(639, 12);
             this.leftRootAlignButton.Name = "leftRootAlignButton";
-            this.leftRootAlignButton.Size = new System.Drawing.Size(147, 33);
+            this.leftRootAlignButton.Size = new System.Drawing.Size(74, 33);
             this.leftRootAlignButton.TabIndex = 6;
             this.leftRootAlignButton.Text = "<==";
             this.leftRootAlignButton.UseVisualStyleBackColor = true;
@@ -116,9 +117,9 @@ namespace SanityArchiver.forms
             // 
             // rightRootAlignButton
             // 
-            this.rightRootAlignButton.Location = new System.Drawing.Point(442, 435);
+            this.rightRootAlignButton.Location = new System.Drawing.Point(435, 12);
             this.rightRootAlignButton.Name = "rightRootAlignButton";
-            this.rightRootAlignButton.Size = new System.Drawing.Size(147, 33);
+            this.rightRootAlignButton.Size = new System.Drawing.Size(74, 33);
             this.rightRootAlignButton.TabIndex = 7;
             this.rightRootAlignButton.Text = "==>";
             this.rightRootAlignButton.UseVisualStyleBackColor = true;
@@ -126,7 +127,7 @@ namespace SanityArchiver.forms
             // 
             // moveButton
             // 
-            this.moveButton.Location = new System.Drawing.Point(430, 150);
+            this.moveButton.Location = new System.Drawing.Point(515, 163);
             this.moveButton.Name = "moveButton";
             this.moveButton.Size = new System.Drawing.Size(83, 36);
             this.moveButton.TabIndex = 8;
@@ -136,7 +137,7 @@ namespace SanityArchiver.forms
             // 
             // copyButton
             // 
-            this.copyButton.Location = new System.Drawing.Point(430, 192);
+            this.copyButton.Location = new System.Drawing.Point(515, 205);
             this.copyButton.Name = "copyButton";
             this.copyButton.Size = new System.Drawing.Size(83, 36);
             this.copyButton.TabIndex = 9;
@@ -146,7 +147,7 @@ namespace SanityArchiver.forms
             // 
             // leftSetAttributeButton
             // 
-            this.leftSetAttributeButton.Location = new System.Drawing.Point(430, 234);
+            this.leftSetAttributeButton.Location = new System.Drawing.Point(515, 247);
             this.leftSetAttributeButton.Name = "leftSetAttributeButton";
             this.leftSetAttributeButton.Size = new System.Drawing.Size(83, 36);
             this.leftSetAttributeButton.TabIndex = 10;
@@ -156,7 +157,7 @@ namespace SanityArchiver.forms
             // 
             // rightSetAttributeButton
             // 
-            this.rightSetAttributeButton.Location = new System.Drawing.Point(967, 234);
+            this.rightSetAttributeButton.Location = new System.Drawing.Point(1121, 249);
             this.rightSetAttributeButton.Name = "rightSetAttributeButton";
             this.rightSetAttributeButton.Size = new System.Drawing.Size(83, 36);
             this.rightSetAttributeButton.TabIndex = 13;
@@ -166,7 +167,7 @@ namespace SanityArchiver.forms
             // 
             // rightCopyButton
             // 
-            this.rightCopyButton.Location = new System.Drawing.Point(967, 192);
+            this.rightCopyButton.Location = new System.Drawing.Point(1121, 207);
             this.rightCopyButton.Name = "rightCopyButton";
             this.rightCopyButton.Size = new System.Drawing.Size(83, 36);
             this.rightCopyButton.TabIndex = 12;
@@ -176,7 +177,7 @@ namespace SanityArchiver.forms
             // 
             // rightMoveButton
             // 
-            this.rightMoveButton.Location = new System.Drawing.Point(967, 150);
+            this.rightMoveButton.Location = new System.Drawing.Point(1121, 165);
             this.rightMoveButton.Name = "rightMoveButton";
             this.rightMoveButton.Size = new System.Drawing.Size(83, 36);
             this.rightMoveButton.TabIndex = 11;
@@ -186,23 +187,23 @@ namespace SanityArchiver.forms
             // 
             // leftPathTextBox
             // 
-            this.leftPathTextBox.Location = new System.Drawing.Point(67, 38);
+            this.leftPathTextBox.Location = new System.Drawing.Point(33, 51);
             this.leftPathTextBox.Name = "leftPathTextBox";
             this.leftPathTextBox.ReadOnly = true;
-            this.leftPathTextBox.Size = new System.Drawing.Size(357, 22);
+            this.leftPathTextBox.Size = new System.Drawing.Size(476, 22);
             this.leftPathTextBox.TabIndex = 14;
             // 
             // rightPathTextBox
             // 
-            this.rightPathTextBox.Location = new System.Drawing.Point(604, 36);
+            this.rightPathTextBox.Location = new System.Drawing.Point(639, 51);
             this.rightPathTextBox.Name = "rightPathTextBox";
             this.rightPathTextBox.ReadOnly = true;
-            this.rightPathTextBox.Size = new System.Drawing.Size(357, 22);
+            this.rightPathTextBox.Size = new System.Drawing.Size(476, 22);
             this.rightPathTextBox.TabIndex = 15;
             // 
             // leftChangeDriveButton
             // 
-            this.leftChangeDriveButton.Location = new System.Drawing.Point(67, 4);
+            this.leftChangeDriveButton.Location = new System.Drawing.Point(33, 17);
             this.leftChangeDriveButton.Name = "leftChangeDriveButton";
             this.leftChangeDriveButton.Size = new System.Drawing.Size(133, 28);
             this.leftChangeDriveButton.TabIndex = 16;
@@ -212,7 +213,7 @@ namespace SanityArchiver.forms
             // 
             // rightChangeDriveButton
             // 
-            this.rightChangeDriveButton.Location = new System.Drawing.Point(604, 2);
+            this.rightChangeDriveButton.Location = new System.Drawing.Point(982, 17);
             this.rightChangeDriveButton.Name = "rightChangeDriveButton";
             this.rightChangeDriveButton.Size = new System.Drawing.Size(133, 28);
             this.rightChangeDriveButton.TabIndex = 17;
@@ -226,10 +227,10 @@ namespace SanityArchiver.forms
             this.file,
             this.size});
             this.leftWindow.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
-            this.leftWindow.Location = new System.Drawing.Point(67, 66);
+            listViewItem3});
+            this.leftWindow.Location = new System.Drawing.Point(33, 79);
             this.leftWindow.Name = "leftWindow";
-            this.leftWindow.Size = new System.Drawing.Size(357, 402);
+            this.leftWindow.Size = new System.Drawing.Size(476, 402);
             this.leftWindow.TabIndex = 18;
             this.leftWindow.UseCompatibleStateImageBehavior = false;
             this.leftWindow.View = System.Windows.Forms.View.Details;
@@ -239,7 +240,7 @@ namespace SanityArchiver.forms
             // file
             // 
             this.file.Text = "Item";
-            this.file.Width = 179;
+            this.file.Width = 160;
             // 
             // size
             // 
@@ -253,13 +254,15 @@ namespace SanityArchiver.forms
             this.columnHeader1,
             this.columnHeader2});
             this.rightWindow.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem2});
-            this.rightWindow.Location = new System.Drawing.Point(604, 66);
+            listViewItem4});
+            this.rightWindow.Location = new System.Drawing.Point(639, 79);
             this.rightWindow.Name = "rightWindow";
-            this.rightWindow.Size = new System.Drawing.Size(357, 402);
+            this.rightWindow.Size = new System.Drawing.Size(476, 402);
             this.rightWindow.TabIndex = 19;
             this.rightWindow.UseCompatibleStateImageBehavior = false;
             this.rightWindow.View = System.Windows.Forms.View.Details;
+            this.rightWindow.SelectedIndexChanged += new System.EventHandler(this.RightWindow_SelectedIndexChanged);
+            this.rightWindow.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.RightWindow_MouseDoubleClick);
             // 
             // columnHeader1
             // 
@@ -271,11 +274,22 @@ namespace SanityArchiver.forms
             this.columnHeader2.Text = "Size";
             this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // leftPropertyButton
+            // 
+            this.leftPropertyButton.Location = new System.Drawing.Point(515, 289);
+            this.leftPropertyButton.Name = "leftPropertyButton";
+            this.leftPropertyButton.Size = new System.Drawing.Size(83, 36);
+            this.leftPropertyButton.TabIndex = 20;
+            this.leftPropertyButton.Text = "Prop";
+            this.leftPropertyButton.UseVisualStyleBackColor = true;
+            this.leftPropertyButton.Click += new System.EventHandler(this.LeftPropertyButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1216, 493);
+            this.ClientSize = new System.Drawing.Size(1216, 524);
+            this.Controls.Add(this.leftPropertyButton);
             this.Controls.Add(this.rightWindow);
             this.Controls.Add(this.leftWindow);
             this.Controls.Add(this.rightChangeDriveButton);
@@ -324,6 +338,7 @@ namespace SanityArchiver.forms
         private ListView rightWindow;
         private ColumnHeader columnHeader1;
         private ColumnHeader columnHeader2;
+        private Button leftPropertyButton;
     }
 }
 

@@ -32,7 +32,11 @@ namespace SanityArchiver.prompter
         }
         public void HandleError(string msg)
         {
-            MessageForm mf = new MessageForm("Error", msg);
+            DisplayMessage("Error", msg);
+        }
+        public void DisplayMessage(string label, string msg)
+        {
+            MessageForm mf = new MessageForm(label, msg);
         }
     }
 }

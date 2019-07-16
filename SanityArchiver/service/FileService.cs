@@ -46,6 +46,12 @@ namespace SanityArchiver.service
             }
             OnResponse();
         }
+        public void ViewProperty(ICollection<FileSystemInfo> infos)
+        {
+            FileSystemInfo info = infos.ElementAt(0);
+            long size = GetSize(info);
+            Prompter.DisplayMessage("Size", size.ToString());
+        }
         public void SetAttribute(ICollection<FileSystemInfo> items)
         {
             SentSources = items;
@@ -79,6 +85,40 @@ namespace SanityArchiver.service
         {
             DriveInfo[] drives = DriveInfo.GetDrives();
             DriveForm df = new DriveForm(drives, OnChangeDriveResponse);
+        }
+
+
+        public long GetSize(FileSystemInfo element)
+        {
+            try
+            {
+                FileInfo file = (FileInfo)element;
+                return file.Length;
+            }
+            catch (InvalidCastException)
+            {
+                DirectoryInfo dir = (DirectoryInfo)element;
+                return GetRecursiveSize(dir, 0);
+            }
+        }
+        
+        private long GetRecursiveSize(DirectoryInfo root, long size)
+        {
+            FileSystemInfo[] elements = root.GetFileSystemInfos();
+            foreach (FileSystemInfo info in elements)
+            {
+                try
+                {
+                    DirectoryInfo dir = (DirectoryInfo)info;
+                    size += GetRecursiveSize(dir, size);
+                }
+                catch (InvalidCastException)
+                {
+                    FileInfo file = (FileInfo)info;
+                    size += file.Length;
+                }
+            }
+            return size;
         }
         private void OnChangeDriveResponse(string drive)
         {

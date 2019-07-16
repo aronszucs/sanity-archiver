@@ -21,8 +21,9 @@ namespace SanityArchiver.fileManager
         public FileSystemRequest OnCopyRequested;
         public FileSystemRequest OnMoveRequested;
 
-        private static readonly string PREV_DIRECTORY_SYMBOL = "..";
+        private static readonly string PREV_DIRECTORY_SYMBOL = "........................";
         private static readonly string DIRECTORY_SEPARATOR_SYMBOL = "----------------------";
+        private static readonly int FILE_SIZE_DIVIDER = 1024;
         private ListView Window;
         private TextBox PathBar;
 
@@ -108,19 +109,32 @@ namespace SanityArchiver.fileManager
             Window.Items.Add(PREV_DIRECTORY_SYMBOL);
             foreach (FileSystemInfo dirInfo in dirs)
             {
-                Window.Items.Add(dirInfo.Name);
-                Files.Add(dirInfo.Name, dirInfo);
+                AddElement(dirInfo);
             }
             Window.Items.Add(DIRECTORY_SEPARATOR_SYMBOL);
             foreach (FileSystemInfo fileInfo in files)
             {
-                Window.Items.Add(fileInfo.Name);
-                Files.Add(fileInfo.Name, fileInfo);
+                AddElement(fileInfo);
             }
             if (PathBar != null)
             {
                 PathBar.Text = Root.Path.FullName;
             }
+        }
+        private void AddElement(FileSystemInfo info)
+        {
+            string size;
+            try
+            {
+                FileInfo fileInfo = (FileInfo)info;
+                size = (fileInfo.Length / FILE_SIZE_DIVIDER).ToString();
+            }
+            catch (InvalidCastException)
+            {
+                size = "";
+            }
+            Window.Items.Add(info.Name).SubItems.Add(size);
+            Files.Add(info.Name, info);
         }
         public void RefreshBoth()
         {
@@ -205,6 +219,10 @@ namespace SanityArchiver.fileManager
         public void OnAlignRootClicked()
         {
             OnRootChangeRequested(Root.Path);
+        }
+        public void OnPropertyClicked()
+        {
+            FileService.ViewProperty(GetSelected());
         }
         private void NavigateTo(String dirName)
         {
