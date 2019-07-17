@@ -64,10 +64,12 @@ namespace SanityArchiver.fileManager
             OnRootChangeRequested = new RootChangeRequest(fileManager.ChangeRoot);
             fileManager.OnRootChangeRequested = new RootChangeRequest(ChangeRoot);
         }
+
         public void AttachPathBar(TextBox pathBarTextBox)
         {
             PathBar = pathBarTextBox;
         }
+
         private void Init(ListView listBox, ArchiveService archiver, FileService fileService)
         {
             Window = listBox;
@@ -78,6 +80,7 @@ namespace SanityArchiver.fileManager
             Root = FileService.Root;
             LastSelectedItems = new string[0];
         }
+
         public void Refresh()
         {
             try
@@ -97,6 +100,7 @@ namespace SanityArchiver.fileManager
                 Prompter.HandleError(e);
             }
         }
+
         private void TryRefresh()
         {
             FileSystemInfo[] dirs = Root.Path.GetDirectories();
@@ -136,11 +140,13 @@ namespace SanityArchiver.fileManager
             Window.Items.Add(info.Name).SubItems.Add(size);
             Files.Add(info.Name, info);
         }
+
         public void RefreshBoth()
         {
             Refresh();
             OnRefreshRequested();
         }
+
         private List<FileSystemInfo> GetSelected()
         {
             List<FileSystemInfo> selected = new List<FileSystemInfo>();
@@ -158,11 +164,10 @@ namespace SanityArchiver.fileManager
             }
             return selected;
         }
+
         public void OnItemDoubleClick()
         {
             Window.SelectedItems.Clear();
-            // Window.SelectedItem = LastSelectedItem;
-
             NavigateTo(LastSelectedItem);
         }
 
@@ -170,32 +175,34 @@ namespace SanityArchiver.fileManager
         {
             OnArchiveRequested(GetSelected());
         }
+
         public void OnDecompressClicked()
         {
             OnDecompressRequested(GetSelected());
         }
+
         public void OnCopyClicked()
         {
             OnCopyRequested(GetSelected());
         }
+
         public void OnMoveClicked()
         {
             OnMoveRequested(GetSelected());
         }
-        public void OnSetAttributeClicked()
-        {
-            FileService.SetAttribute(GetSelected());
-        }
+
         public void OnChangeDriveClicked()
         {
             DriveInfo[] drives = DriveInfo.GetDrives();
             DriveForm df = new DriveForm(drives, OnChangeDriveResponse);
         }
+
         private void OnChangeDriveResponse(string drive)
         {
             Root.Path = new DirectoryInfo(drive);
             Refresh();
         }
+
         public void OnSelectionChanged()
         {
             foreach (ListViewItem item in Window.SelectedItems)
@@ -216,14 +223,17 @@ namespace SanityArchiver.fileManager
                 i++;
             }
         }
+
         public void OnAlignRootClicked()
         {
             OnRootChangeRequested(Root.Path);
         }
+
         public void OnPropertyClicked()
         {
             FileService.ViewProperty(GetSelected());
         }
+
         private void NavigateTo(String dirName)
         {
             if (dirName.Equals(PREV_DIRECTORY_SYMBOL))
@@ -241,6 +251,7 @@ namespace SanityArchiver.fileManager
             }
             Refresh();
         }
+
         public void ChangeRoot(DirectoryInfo dirInfo)
         {
             Root.Path = dirInfo;
@@ -252,18 +263,22 @@ namespace SanityArchiver.fileManager
             Root.Path = dirInfo;
             Refresh();
         }
+
         public void Archive(ICollection<FileSystemInfo> sources)
         {
              ArchiveService.Archive(sources, Root.Path);
         }
+
         public void Decompress(ICollection<FileSystemInfo> sources)
         {
              ArchiveService.Decompress(sources, Root.Path);
         }
+
         public void Move(ICollection<FileSystemInfo> items)
         {
             FileService.Move(items, Root.Path);
         }
+
         public void Copy(ICollection<FileSystemInfo> items)
         {
            FileService.Copy(items, Root.Path);

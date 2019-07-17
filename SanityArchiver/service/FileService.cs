@@ -51,30 +51,24 @@ namespace SanityArchiver.service
         public void ViewProperty(ICollection<FileSystemInfo> infos)
         {
             FileSystemInfo info = infos.ElementAt(0);
+            SettableAttributes attrs = GetSettableAttributes(infos);
+            SentSources = infos;
             try
             {
                 DirectoryInfo dir = (DirectoryInfo)info;
                 DirSizeCalculator calc = new DirSizeCalculator();
-                PropertyForm pr = new PropertyForm(dir.Name, calc.RequestData, calc.Terminate);
+                PropertyForm pr = new PropertyForm
+                    (dir.Name, calc.RequestData, calc.Terminate, attrs, OnAttributeResponse);
                 calc.Calculate(dir);
             }
             catch (InvalidCastException)
             {
                 FileInfo file = (FileInfo)info;
                 long size = file.Length;
-                PropertyForm pr = new PropertyForm(file.Name, 1, size);
+                PropertyForm pr = new PropertyForm(file.Name, 1, size, attrs, OnAttributeResponse);
             }
         }
         
-        public void SetAttribute(ICollection<FileSystemInfo> items)
-        {
-            SentSources = items;
-
-            SettableAttributes attrs = GetSettableAttributes(SentSources);
-
-            AttributeForm form = new AttributeForm(attrs, new AttributeForm.AttributeHandler(OnAttributeResponse));
-        }
-
         private void OnAttributeResponse(SettableAttributes attributes)
         {
             foreach (FileSystemInfo info in SentSources)
@@ -95,9 +89,7 @@ namespace SanityArchiver.service
                 }
             }
         }
-        
        
-        
         private void RemoveSettableAttributes(string path)
         {
             File.SetAttributes(path, File.GetAttributes(path) & ~FileAttributes.ReadOnly);

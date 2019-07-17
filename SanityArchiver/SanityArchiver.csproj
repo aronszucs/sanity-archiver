@@ -52,7 +52,7 @@
     <Compile Include="archiver\ArchiverException.cs" />
     <Compile Include="archiver\AbstractArchiver.cs" />
     <Compile Include="archiver\DotnetZipArchiver.cs" />
-    <Compile Include="data\Class1.cs" />
+    <Compile Include="data\DirSizeCalculationData.cs" />
     <Compile Include="data\PathContainer.cs" />
     <Compile Include="fileManager\FileManagerException.cs" />
     <Compile Include="form\ArchiverForm.cs">
@@ -60,12 +60,6 @@
     </Compile>
     <Compile Include="form\ArchiverForm.Designer.cs">
       <DependentUpon>ArchiverForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="form\AttributeForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="form\AttributeForm.Designer.cs">
-      <DependentUpon>AttributeForm.cs</DependentUpon>
     </Compile>
     <Compile Include="form\DriveForm.cs">
       <SubType>Form</SubType>
@@ -110,9 +104,6 @@
     <Compile Include="service\FileService.cs" />
     <EmbeddedResource Include="form\ArchiverForm.resx">
       <DependentUpon>ArchiverForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="form\AttributeForm.resx">
-      <DependentUpon>AttributeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="form\DriveForm.resx">
       <DependentUpon>DriveForm.cs</DependentUpon>

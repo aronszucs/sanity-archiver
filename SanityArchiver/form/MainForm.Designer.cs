@@ -48,8 +48,6 @@ namespace SanityArchiver.forms
             this.rightRootAlignButton = new System.Windows.Forms.Button();
             this.moveButton = new System.Windows.Forms.Button();
             this.copyButton = new System.Windows.Forms.Button();
-            this.leftSetAttributeButton = new System.Windows.Forms.Button();
-            this.rightSetAttributeButton = new System.Windows.Forms.Button();
             this.rightCopyButton = new System.Windows.Forms.Button();
             this.rightMoveButton = new System.Windows.Forms.Button();
             this.leftPathTextBox = new System.Windows.Forms.TextBox();
@@ -63,6 +61,7 @@ namespace SanityArchiver.forms
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.leftPropertyButton = new System.Windows.Forms.Button();
+            this.rightPropertyButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // leftArchiveButton
@@ -145,26 +144,6 @@ namespace SanityArchiver.forms
             this.copyButton.UseVisualStyleBackColor = true;
             this.copyButton.Click += new System.EventHandler(this.CopyButton_Click);
             // 
-            // leftSetAttributeButton
-            // 
-            this.leftSetAttributeButton.Location = new System.Drawing.Point(515, 247);
-            this.leftSetAttributeButton.Name = "leftSetAttributeButton";
-            this.leftSetAttributeButton.Size = new System.Drawing.Size(83, 36);
-            this.leftSetAttributeButton.TabIndex = 10;
-            this.leftSetAttributeButton.Text = "Attr";
-            this.leftSetAttributeButton.UseVisualStyleBackColor = true;
-            this.leftSetAttributeButton.Click += new System.EventHandler(this.LeftSetAttributeButton_Click);
-            // 
-            // rightSetAttributeButton
-            // 
-            this.rightSetAttributeButton.Location = new System.Drawing.Point(1121, 249);
-            this.rightSetAttributeButton.Name = "rightSetAttributeButton";
-            this.rightSetAttributeButton.Size = new System.Drawing.Size(83, 36);
-            this.rightSetAttributeButton.TabIndex = 13;
-            this.rightSetAttributeButton.Text = "Attr";
-            this.rightSetAttributeButton.UseVisualStyleBackColor = true;
-            this.rightSetAttributeButton.Click += new System.EventHandler(this.RightSetAttributeButton_Click);
-            // 
             // rightCopyButton
             // 
             this.rightCopyButton.Location = new System.Drawing.Point(1121, 207);
@@ -239,7 +218,7 @@ namespace SanityArchiver.forms
             // 
             // file
             // 
-            this.file.Text = "Item";
+            this.file.Text = "Name";
             this.file.Width = 160;
             // 
             // size
@@ -266,7 +245,7 @@ namespace SanityArchiver.forms
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "Item";
+            this.columnHeader1.Text = "Name";
             this.columnHeader1.Width = 169;
             // 
             // columnHeader2
@@ -276,7 +255,7 @@ namespace SanityArchiver.forms
             // 
             // leftPropertyButton
             // 
-            this.leftPropertyButton.Location = new System.Drawing.Point(515, 289);
+            this.leftPropertyButton.Location = new System.Drawing.Point(515, 247);
             this.leftPropertyButton.Name = "leftPropertyButton";
             this.leftPropertyButton.Size = new System.Drawing.Size(83, 36);
             this.leftPropertyButton.TabIndex = 20;
@@ -284,11 +263,22 @@ namespace SanityArchiver.forms
             this.leftPropertyButton.UseVisualStyleBackColor = true;
             this.leftPropertyButton.Click += new System.EventHandler(this.LeftPropertyButton_Click);
             // 
+            // rightPropertyButton
+            // 
+            this.rightPropertyButton.Location = new System.Drawing.Point(1121, 249);
+            this.rightPropertyButton.Name = "rightPropertyButton";
+            this.rightPropertyButton.Size = new System.Drawing.Size(83, 36);
+            this.rightPropertyButton.TabIndex = 21;
+            this.rightPropertyButton.Text = "Prop";
+            this.rightPropertyButton.UseVisualStyleBackColor = true;
+            this.rightPropertyButton.Click += new System.EventHandler(this.RightPropertyButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1216, 524);
+            this.Controls.Add(this.rightPropertyButton);
             this.Controls.Add(this.leftPropertyButton);
             this.Controls.Add(this.rightWindow);
             this.Controls.Add(this.leftWindow);
@@ -296,10 +286,8 @@ namespace SanityArchiver.forms
             this.Controls.Add(this.leftChangeDriveButton);
             this.Controls.Add(this.rightPathTextBox);
             this.Controls.Add(this.leftPathTextBox);
-            this.Controls.Add(this.rightSetAttributeButton);
             this.Controls.Add(this.rightCopyButton);
             this.Controls.Add(this.rightMoveButton);
-            this.Controls.Add(this.leftSetAttributeButton);
             this.Controls.Add(this.copyButton);
             this.Controls.Add(this.moveButton);
             this.Controls.Add(this.rightRootAlignButton);
@@ -324,8 +312,6 @@ namespace SanityArchiver.forms
         private System.Windows.Forms.Button rightRootAlignButton;
         private System.Windows.Forms.Button moveButton;
         private System.Windows.Forms.Button copyButton;
-        private System.Windows.Forms.Button leftSetAttributeButton;
-        private System.Windows.Forms.Button rightSetAttributeButton;
         private System.Windows.Forms.Button rightCopyButton;
         private System.Windows.Forms.Button rightMoveButton;
         private System.Windows.Forms.TextBox leftPathTextBox;
@@ -339,6 +325,7 @@ namespace SanityArchiver.forms
         private ColumnHeader columnHeader1;
         private ColumnHeader columnHeader2;
         private Button leftPropertyButton;
+        private Button rightPropertyButton;
     }
 }
 

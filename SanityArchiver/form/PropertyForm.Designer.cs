@@ -36,6 +36,10 @@
             this.elementsTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.archiveChBox = new System.Windows.Forms.CheckBox();
+            this.hiddenChBox = new System.Windows.Forms.CheckBox();
+            this.readOnlyChBox = new System.Windows.Forms.CheckBox();
+            this.okButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // sizeTextBox
@@ -94,11 +98,55 @@
             this.timer1.Interval = 500;
             this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
             // 
+            // archiveChBox
+            // 
+            this.archiveChBox.AutoSize = true;
+            this.archiveChBox.Location = new System.Drawing.Point(32, 198);
+            this.archiveChBox.Name = "archiveChBox";
+            this.archiveChBox.Size = new System.Drawing.Size(77, 21);
+            this.archiveChBox.TabIndex = 9;
+            this.archiveChBox.Text = "Archive";
+            this.archiveChBox.UseVisualStyleBackColor = true;
+            // 
+            // hiddenChBox
+            // 
+            this.hiddenChBox.AutoSize = true;
+            this.hiddenChBox.Location = new System.Drawing.Point(32, 171);
+            this.hiddenChBox.Name = "hiddenChBox";
+            this.hiddenChBox.Size = new System.Drawing.Size(75, 21);
+            this.hiddenChBox.TabIndex = 8;
+            this.hiddenChBox.Text = "Hidden";
+            this.hiddenChBox.UseVisualStyleBackColor = true;
+            // 
+            // readOnlyChBox
+            // 
+            this.readOnlyChBox.AutoSize = true;
+            this.readOnlyChBox.Location = new System.Drawing.Point(32, 144);
+            this.readOnlyChBox.Name = "readOnlyChBox";
+            this.readOnlyChBox.Size = new System.Drawing.Size(94, 21);
+            this.readOnlyChBox.TabIndex = 7;
+            this.readOnlyChBox.Text = "Read only";
+            this.readOnlyChBox.UseVisualStyleBackColor = true;
+            // 
+            // okButton
+            // 
+            this.okButton.Location = new System.Drawing.Point(186, 198);
+            this.okButton.Name = "okButton";
+            this.okButton.Size = new System.Drawing.Size(75, 27);
+            this.okButton.TabIndex = 10;
+            this.okButton.Text = "OK";
+            this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.OkButton_Click);
+            // 
             // PropertyForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(400, 152);
+            this.ClientSize = new System.Drawing.Size(324, 265);
+            this.Controls.Add(this.okButton);
+            this.Controls.Add(this.archiveChBox);
+            this.Controls.Add(this.hiddenChBox);
+            this.Controls.Add(this.readOnlyChBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.elementsTextBox);
             this.Controls.Add(this.label2);
@@ -121,5 +169,9 @@
         private System.Windows.Forms.TextBox elementsTextBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.CheckBox archiveChBox;
+        private System.Windows.Forms.CheckBox hiddenChBox;
+        private System.Windows.Forms.CheckBox readOnlyChBox;
+        private System.Windows.Forms.Button okButton;
     }
 }

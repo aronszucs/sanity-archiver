@@ -73,11 +73,6 @@ namespace SanityArchiver.forms
             LeftFileManager.OnCopyClicked();
         }
 
-        private void LeftSetAttributeButton_Click(object sender, EventArgs e)
-        {
-            LeftFileManager.OnSetAttributeClicked();
-        }
-
         private void RightMoveButton_Click(object sender, EventArgs e)
         {
             RightFileManager.OnMoveClicked();
@@ -86,11 +81,6 @@ namespace SanityArchiver.forms
         private void RightCopyButton_Click(object sender, EventArgs e)
         {
             RightFileManager.OnCopyClicked();
-        }
-
-        private void RightSetAttributeButton_Click(object sender, EventArgs e)
-        {
-            RightFileManager.OnSetAttributeClicked();
         }
 
         private void LeftChangeDriveButton_Click(object sender, EventArgs e)
@@ -132,6 +122,11 @@ namespace SanityArchiver.forms
         private void LeftPropertyButton_Click(object sender, EventArgs e)
         {
             LeftFileManager.OnPropertyClicked();
+        }
+
+        private void RightPropertyButton_Click(object sender, EventArgs e)
+        {
+            RightFileManager.OnPropertyClicked();
         }
     }
 }
