@@ -32,11 +32,11 @@ namespace SanityArchiver.forms
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "",
             ""}, -1);
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "",
             ""}, -1);
@@ -62,6 +62,7 @@ namespace SanityArchiver.forms
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.leftPropertyButton = new System.Windows.Forms.Button();
             this.rightPropertyButton = new System.Windows.Forms.Button();
+            this.leftSearchButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // leftArchiveButton
@@ -206,7 +207,7 @@ namespace SanityArchiver.forms
             this.file,
             this.size});
             this.leftWindow.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3});
+            listViewItem1});
             this.leftWindow.Location = new System.Drawing.Point(33, 79);
             this.leftWindow.Name = "leftWindow";
             this.leftWindow.Size = new System.Drawing.Size(476, 402);
@@ -233,7 +234,7 @@ namespace SanityArchiver.forms
             this.columnHeader1,
             this.columnHeader2});
             this.rightWindow.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem4});
+            listViewItem2});
             this.rightWindow.Location = new System.Drawing.Point(639, 79);
             this.rightWindow.Name = "rightWindow";
             this.rightWindow.Size = new System.Drawing.Size(476, 402);
@@ -273,11 +274,22 @@ namespace SanityArchiver.forms
             this.rightPropertyButton.UseVisualStyleBackColor = true;
             this.rightPropertyButton.Click += new System.EventHandler(this.RightPropertyButton_Click);
             // 
+            // leftSearchButton
+            // 
+            this.leftSearchButton.Location = new System.Drawing.Point(515, 289);
+            this.leftSearchButton.Name = "leftSearchButton";
+            this.leftSearchButton.Size = new System.Drawing.Size(83, 36);
+            this.leftSearchButton.TabIndex = 22;
+            this.leftSearchButton.Text = "Search";
+            this.leftSearchButton.UseVisualStyleBackColor = true;
+            this.leftSearchButton.Click += new System.EventHandler(this.LeftSearchButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1216, 524);
+            this.Controls.Add(this.leftSearchButton);
             this.Controls.Add(this.rightPropertyButton);
             this.Controls.Add(this.leftPropertyButton);
             this.Controls.Add(this.rightWindow);
@@ -326,6 +338,7 @@ namespace SanityArchiver.forms
         private ColumnHeader columnHeader2;
         private Button leftPropertyButton;
         private Button rightPropertyButton;
+        private Button leftSearchButton;
     }
 }
 

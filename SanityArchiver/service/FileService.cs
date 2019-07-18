@@ -13,7 +13,10 @@ namespace SanityArchiver.service
     class FileService : AbstractService
     {
         public FilePathContainer Root {get; private set; }
-        private bool AbortCalculation = false;
+        public delegate void SearchHandler(ICollection<DirectoryInfo> dirs, ICollection<FileInfo> files);
+        public SearchHandler OnSearchCompleted;
+
+        private string SearchValue;
         public FileService(FilePathContainer filePathContainer)
         {
             Root = filePathContainer;
@@ -33,6 +36,33 @@ namespace SanityArchiver.service
             }
             OnResponse();
         }
+
+        public void Search(SearchHandler onSearchCompleted)
+        {
+            InputPromptForm ip = new InputPromptForm("Enter search keyword", OnSearchResponse);
+            ip.Show();
+        }
+
+        public void OnSearchResponse(string value)
+        {
+            FileSeeker fileSeeker = new FileSeeker();
+            List<FileSystemInfo> items = fileSeeker.Seek(value, Root.Path.FullName);
+            List<FileInfo> files = new List<FileInfo>();
+            List<DirectoryInfo> dirs = new List<DirectoryInfo>();
+            foreach (FileSystemInfo item in items)
+            {
+                try
+                {
+                    dirs.Add( (DirectoryInfo)item);
+                }
+                catch (InvalidCastException)
+                {
+                    files.Add((FileInfo)item);
+                }
+            }
+            OnSearchCompleted(dirs, files);
+        }
+
         public void Move(ICollection<FileSystemInfo> items, DirectoryInfo destination)
         {
             foreach (FileSystemInfo item in items)
@@ -53,20 +83,20 @@ namespace SanityArchiver.service
             FileSystemInfo info = infos.ElementAt(0);
             SettableAttributes attrs = GetSettableAttributes(infos);
             SentSources = infos;
-            try
+          
+            DirSizeCalculator calc = new DirSizeCalculator();
+            string name;
+            if (infos.Count > 1)
             {
-                DirectoryInfo dir = (DirectoryInfo)info;
-                DirSizeCalculator calc = new DirSizeCalculator();
-                PropertyForm pr = new PropertyForm
-                    (dir.Name, calc.RequestData, calc.Terminate, attrs, OnAttributeResponse);
-                calc.Calculate(dir);
+                name = "<multiple selected>";
             }
-            catch (InvalidCastException)
+            else
             {
-                FileInfo file = (FileInfo)info;
-                long size = file.Length;
-                PropertyForm pr = new PropertyForm(file.Name, 1, size, attrs, OnAttributeResponse);
+                name = infos.ElementAt(0).Name;
             }
+            PropertyForm pr = new PropertyForm
+                (name, calc.RequestData, calc.Terminate, attrs, OnAttributeResponse);
+            calc.Calculate(infos);
         }
         
         private void OnAttributeResponse(SettableAttributes attributes)

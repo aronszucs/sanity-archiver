@@ -31,6 +31,13 @@ namespace SanityArchiver.forms
 
             LeftFileManager.Refresh();
             RightFileManager.Refresh();
+            /*
+            long size = 1000024L * 1024L * 1024L;
+            DataSize ds = HumanReadableSizeConverter.ConvertBytes(size);
+            double val = ds.Value;
+            string pr = ds.Prefix;
+            int k = 6;
+            */
         }
 
         private void LeftArchiveButton_Click(object sender, EventArgs e)
@@ -114,11 +121,6 @@ namespace SanityArchiver.forms
             RightFileManager.OnItemDoubleClick();
         }
 
-        private void Pro(object sender, EventArgs e)
-        {
-
-        }
-
         private void LeftPropertyButton_Click(object sender, EventArgs e)
         {
             LeftFileManager.OnPropertyClicked();
@@ -127,6 +129,11 @@ namespace SanityArchiver.forms
         private void RightPropertyButton_Click(object sender, EventArgs e)
         {
             RightFileManager.OnPropertyClicked();
+        }
+
+        private void LeftSearchButton_Click(object sender, EventArgs e)
+        {
+            LeftFileManager.OnSearchClicked();
         }
     }
 }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace SanityArchiver.data
 {
-    public struct DirSizeCalculationData
+    public struct SizeCalculationData
     {
         public int Elements;
         public long Size;
-        public DirSizeCalculationData(int elements, long size)
+        public SizeCalculationData(int elements, long size)
         {
             Elements = elements;
             Size = size;

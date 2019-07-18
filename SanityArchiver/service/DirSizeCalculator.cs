@@ -11,34 +11,68 @@ namespace SanityArchiver.service
 {
     class DirSizeCalculator
     {
-        private long CurrentDirSize;
+        private long CurrentSize;
         private int CurrentElementNumber;
         private bool AbortCalculation;
-        private DirectoryInfo Root;
+        private ICollection<DirectoryInfo> SearchDirRoots;
         
-        public void Calculate(DirectoryInfo dir)
+        public void Calculate(ICollection<FileSystemInfo> elements)
         {
-            Root = dir;
+            List<FileInfo> files = new List<FileInfo>();
+            SearchDirRoots = new List<DirectoryInfo>();
+
+            foreach (FileSystemInfo info in elements)
+            {
+                try
+                {
+                    SearchDirRoots.Add((DirectoryInfo)info);
+                }
+                catch (InvalidCastException)
+                {
+                    files.Add((FileInfo)info);
+                }
+            }
             AbortCalculation = false;
-            CurrentDirSize = 0;
-            CurrentElementNumber = 0;
-            ThreadStart threadStart = new ThreadStart(StartCalculation);
-            Thread th = new Thread(threadStart);
-            th.Start();
-            
+            CurrentSize = CalculateFiles(files);
+            CurrentElementNumber = files.Count;
+            if (SearchDirRoots.Count > 0)
+            {
+                ThreadStart threadStart = new ThreadStart(StartDirCalculation);
+                Thread th = new Thread(threadStart);
+                th.Start();
+            }
         }
+
         public void Terminate()
         {
             AbortCalculation = true;
         }
 
-        public DirSizeCalculationData RequestData()
+        public SizeCalculationData RequestData()
         {
-            return new DirSizeCalculationData(CurrentElementNumber, CurrentDirSize);
+            return new SizeCalculationData(CurrentElementNumber, CurrentSize);
         }
-        private void StartCalculation()
+
+        private long CalculateFiles(ICollection<FileInfo> files)
         {
-            GetRecursiveSize(Root);
+            long size = 0;
+            foreach (FileInfo file in files)
+            {
+                size += file.Length;
+            }
+            return size;
+        }
+
+        private void StartDirCalculation()
+        {
+            foreach (DirectoryInfo dir in SearchDirRoots)
+            {
+                try
+                {
+                    GetRecursiveSize(dir);
+                }
+                catch (UnauthorizedAccessException) { }
+            }
         }
 
         private void GetRecursiveSize(DirectoryInfo root)
@@ -50,13 +84,15 @@ namespace SanityArchiver.service
             FileSystemInfo[] elements = root.GetFileSystemInfos();
             DirectoryInfo[] dirs = root.GetDirectories();
             FileInfo[] files = root.GetFiles();
-            CurrentElementNumber++;
             foreach (FileInfo file in files)
             {
-                CurrentDirSize += file.Length;
+                CurrentElementNumber++;
+                CurrentSize += file.Length;
             }
             foreach (DirectoryInfo dir in dirs)
             {
+                CurrentElementNumber++;
+
                 try
                 {
                     GetRecursiveSize(dir);

@@ -16,6 +16,16 @@ namespace SanityArchiver.form
         private Prompter.InputHandler OnOkButtonClicked;
         public InputPromptForm(string message, string defaultValue, Prompter.InputHandler okButtonClick)
         {
+            Init(message, defaultValue, okButtonClick);
+        }
+
+        public InputPromptForm(string message, Prompter.InputHandler okButtonClick)
+        {
+            Init(message, null, okButtonClick);
+        }
+
+        private void Init(string message, string defaultValue, Prompter.InputHandler okButtonClick)
+        {
             InitializeComponent();
             Text = message;
             inputTextBox.Text = defaultValue;

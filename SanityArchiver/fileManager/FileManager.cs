@@ -23,7 +23,6 @@ namespace SanityArchiver.fileManager
 
         private static readonly string PREV_DIRECTORY_SYMBOL = "........................";
         private static readonly string DIRECTORY_SEPARATOR_SYMBOL = "----------------------";
-        private static readonly int FILE_SIZE_DIVIDER = 1024;
         private ListView Window;
         private TextBox PathBar;
 
@@ -85,29 +84,24 @@ namespace SanityArchiver.fileManager
         {
             try
             {
-                TryRefresh();
+                DirectoryInfo[] dirs = Root.Path.GetDirectories();
+                FileInfo[] files = Root.Path.GetFiles();
+                TryRefresh(dirs, files);
             } 
             catch (IOException e)
             {
                 Prompter.HandleError(e);
             }
-            catch (NullReferenceException)
-            {
-                Prompter.HandleError("You are already in root");
-            }
+            
             catch (UnauthorizedAccessException e)
             {
                 Prompter.HandleError(e);
             }
         }
 
-        private void TryRefresh()
+        private void TryRefresh(ICollection<DirectoryInfo> dirs, ICollection<FileInfo>files)
         {
-            FileSystemInfo[] dirs = Root.Path.GetDirectories();
-            FileSystemInfo[] files = Root.Path.GetFiles();
-            FileSystemInfo[] fileSystems = new FileSystemInfo[dirs.Length + files.Length];
-            Array.Copy(dirs, 0, fileSystems, 0, dirs.Length);
-            Array.Copy(files, 0, fileSystems, dirs.Length, files.Length);
+            
             Files.Clear();
             Window.Items.Clear();
             Window.Items.Add(PREV_DIRECTORY_SYMBOL);
@@ -131,7 +125,7 @@ namespace SanityArchiver.fileManager
             try
             {
                 FileInfo fileInfo = (FileInfo)info;
-                size = (fileInfo.Length / FILE_SIZE_DIVIDER).ToString();
+                size = HRDataSizeConverter.ConvertBytes(fileInfo.Length).ToString();
             }
             catch (InvalidCastException)
             {
@@ -202,6 +196,26 @@ namespace SanityArchiver.fileManager
             Root.Path = new DirectoryInfo(drive);
             Refresh();
         }
+        public void OnAlignRootClicked()
+        {
+            OnRootChangeRequested(Root.Path);
+        }
+
+        public void OnPropertyClicked()
+        {
+            FileService.ViewProperty(GetSelected());
+        }
+
+        public void OnSearchClicked()
+        {
+            FileService.OnSearchCompleted = OnSearchResponse;
+            FileService.Search(OnSearchResponse);
+        }
+
+        private void OnSearchResponse(ICollection<DirectoryInfo> dirs, ICollection<FileInfo> files)
+        {
+            TryRefresh(dirs, files);
+        }
 
         public void OnSelectionChanged()
         {
@@ -224,31 +238,40 @@ namespace SanityArchiver.fileManager
             }
         }
 
-        public void OnAlignRootClicked()
-        {
-            OnRootChangeRequested(Root.Path);
-        }
-
-        public void OnPropertyClicked()
-        {
-            FileService.ViewProperty(GetSelected());
-        }
-
         private void NavigateTo(String dirName)
         {
             if (dirName.Equals(PREV_DIRECTORY_SYMBOL))
             {
+                DirectoryInfo prev = Root.Path;
                 Root.Path = Root.Path.Parent;
+                try
+                {
+
+                    Refresh();
+                }
+                catch (NullReferenceException)
+                {
+                    Root.Path = prev;
+                }
             } else
             {
                 try
                 {
                     DirectoryInfo dirInfo = (DirectoryInfo)Files[dirName];
-                    Root.Path = new DirectoryInfo(dirInfo.FullName);
+                    NavigateToDir(dirInfo);
                 }
-                catch (InvalidCastException) {}
-                catch (KeyNotFoundException) { }
+                catch (InvalidCastException)
+                {
+                    DirectoryInfo dirInfo = ((FileInfo) Files[dirName]).Directory;
+                    NavigateToDir(dirInfo);
+                }
+                catch (KeyNotFoundException) {}
             }
+        }
+
+        private void NavigateToDir(DirectoryInfo dirInfo)
+        {
+            Root.Path = new DirectoryInfo(dirInfo.FullName);
             Refresh();
         }
 

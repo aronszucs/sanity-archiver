@@ -13,7 +13,7 @@ namespace SanityArchiver.form
 {
     public partial class PropertyForm : Form
     {
-        public delegate DirSizeCalculationData RequestSizeDataHandler();
+        public delegate SizeCalculationData RequestSizeDataHandler();
         public delegate void TerminationHandler();
 
         public delegate void AttributeHandler(SettableAttributes attributes);
@@ -62,9 +62,10 @@ namespace SanityArchiver.form
 
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            DirSizeCalculationData data = RequestSizeData();
-            sizeTextBox.Text = data.Size.ToString();
+            SizeCalculationData data = RequestSizeData();
+            HRDataSize ds = HRDataSizeConverter.ConvertBytes(data.Size);
             elementsTextBox.Text = data.Elements.ToString();
+            sizeTextBox.Text = ds.ToString();
         }
 
         private void PropertyForm_FormClosed(object sender, FormClosedEventArgs e)

@@ -52,7 +52,9 @@
     <Compile Include="archiver\ArchiverException.cs" />
     <Compile Include="archiver\AbstractArchiver.cs" />
     <Compile Include="archiver\DotnetZipArchiver.cs" />
-    <Compile Include="data\DirSizeCalculationData.cs" />
+    <Compile Include="data\HRDataSize.cs" />
+    <Compile Include="data\HRDataSizeConverter.cs" />
+    <Compile Include="data\SizeCalculationData.cs" />
     <Compile Include="data\PathContainer.cs" />
     <Compile Include="fileManager\FileManagerException.cs" />
     <Compile Include="form\ArchiverForm.cs">
@@ -100,6 +102,7 @@
     <Compile Include="service\ArchiveService.cs" />
     <Compile Include="service\AbstractService.cs" />
     <Compile Include="data\SettableAttributes.cs" />
+    <Compile Include="service\FileSeeker.cs" />
     <Compile Include="service\DirSizeCalculator.cs" />
     <Compile Include="service\FileService.cs" />
     <EmbeddedResource Include="form\ArchiverForm.resx">

@@ -73,7 +73,7 @@
             this.nameTextBox.Location = new System.Drawing.Point(101, 29);
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.ReadOnly = true;
-            this.nameTextBox.Size = new System.Drawing.Size(147, 22);
+            this.nameTextBox.Size = new System.Drawing.Size(322, 22);
             this.nameTextBox.TabIndex = 3;
             // 
             // elementsTextBox
@@ -142,7 +142,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(324, 265);
+            this.ClientSize = new System.Drawing.Size(435, 265);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.archiveChBox);
             this.Controls.Add(this.hiddenChBox);
