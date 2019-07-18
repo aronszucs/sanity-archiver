@@ -80,6 +80,8 @@ namespace SanityArchiver.fileManager
             LastSelectedItems = new string[0];
         }
 
+        // Navigation methods
+
         public void Refresh()
         {
             try
@@ -159,6 +161,58 @@ namespace SanityArchiver.fileManager
             return selected;
         }
 
+        private void NavigateTo(String dirName)
+        {
+            if (dirName.Equals(PREV_DIRECTORY_SYMBOL))
+            {
+                DirectoryInfo prev = Root.Path;
+                Root.Path = Root.Path.Parent;
+                try
+                {
+
+                    Refresh();
+                }
+                catch (NullReferenceException)
+                {
+                    Root.Path = prev;
+                }
+            }
+            else
+            {
+                try
+                {
+                    DirectoryInfo dirInfo = (DirectoryInfo)Files[dirName];
+                    NavigateToDir(dirInfo);
+                }
+                catch (InvalidCastException)
+                {
+                    DirectoryInfo dirInfo = ((FileInfo)Files[dirName]).Directory;
+                    NavigateToDir(dirInfo);
+                }
+                catch (KeyNotFoundException) { }
+            }
+        }
+
+        private void NavigateToDir(DirectoryInfo dirInfo)
+        {
+            Root.Path = new DirectoryInfo(dirInfo.FullName);
+            Refresh();
+        }
+
+        public void ChangeRoot(DirectoryInfo dirInfo)
+        {
+            Root.Path = dirInfo;
+            Refresh();
+        }
+
+        public void NavigateTo(DirectoryInfo dirInfo)
+        {
+            Root.Path = dirInfo;
+            Refresh();
+        }
+
+        // Clicks and other form calls
+
         public void OnItemDoubleClick()
         {
             Window.SelectedItems.Clear();
@@ -191,11 +245,6 @@ namespace SanityArchiver.fileManager
             DriveForm df = new DriveForm(drives, OnChangeDriveResponse);
         }
 
-        private void OnChangeDriveResponse(string drive)
-        {
-            Root.Path = new DirectoryInfo(drive);
-            Refresh();
-        }
         public void OnAlignRootClicked()
         {
             OnRootChangeRequested(Root.Path);
@@ -210,11 +259,6 @@ namespace SanityArchiver.fileManager
         {
             FileService.OnSearchCompleted = OnSearchResponse;
             FileService.Search(OnSearchResponse);
-        }
-
-        private void OnSearchResponse(ICollection<DirectoryInfo> dirs, ICollection<FileInfo> files)
-        {
-            TryRefresh(dirs, files);
         }
 
         public void OnSelectionChanged()
@@ -238,54 +282,20 @@ namespace SanityArchiver.fileManager
             }
         }
 
-        private void NavigateTo(String dirName)
-        {
-            if (dirName.Equals(PREV_DIRECTORY_SYMBOL))
-            {
-                DirectoryInfo prev = Root.Path;
-                Root.Path = Root.Path.Parent;
-                try
-                {
+        // Responses
 
-                    Refresh();
-                }
-                catch (NullReferenceException)
-                {
-                    Root.Path = prev;
-                }
-            } else
-            {
-                try
-                {
-                    DirectoryInfo dirInfo = (DirectoryInfo)Files[dirName];
-                    NavigateToDir(dirInfo);
-                }
-                catch (InvalidCastException)
-                {
-                    DirectoryInfo dirInfo = ((FileInfo) Files[dirName]).Directory;
-                    NavigateToDir(dirInfo);
-                }
-                catch (KeyNotFoundException) {}
-            }
-        }
-
-        private void NavigateToDir(DirectoryInfo dirInfo)
+        private void OnChangeDriveResponse(string drive)
         {
-            Root.Path = new DirectoryInfo(dirInfo.FullName);
+            Root.Path = new DirectoryInfo(drive);
             Refresh();
         }
 
-        public void ChangeRoot(DirectoryInfo dirInfo)
+        private void OnSearchResponse(ICollection<DirectoryInfo> dirs, ICollection<FileInfo> files)
         {
-            Root.Path = dirInfo;
-            Refresh();
+            TryRefresh(dirs, files);
         }
 
-        public void NavigateTo(DirectoryInfo dirInfo)
-        {
-            Root.Path = dirInfo;
-            Refresh();
-        }
+        // Service wrappers
 
         public void Archive(ICollection<FileSystemInfo> sources)
         {
