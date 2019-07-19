@@ -102,6 +102,7 @@
     <Compile Include="service\ArchiveService.cs" />
     <Compile Include="service\AbstractService.cs" />
     <Compile Include="data\SettableAttributes.cs" />
+    <Compile Include="service\NavigationService.cs" />
     <Compile Include="service\FileSeeker.cs" />
     <Compile Include="service\DirSizeCalculator.cs" />
     <Compile Include="service\FileService.cs" />
