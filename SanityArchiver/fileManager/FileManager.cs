@@ -12,34 +12,38 @@ using SanityArchiver.data;
 
 namespace SanityArchiver.fileManager
 {
+
+    public delegate void FileSystemRequest(ICollection<FileSystemInfo> sources);
+    public delegate void ActionRequest();
+    public delegate void DirectoryRequest(DirectoryInfo dirInfo);
+    public delegate void RefreshRequest();
+    public delegate void RootChangeRequest(DirectoryInfo dirInfo);
+
     class FileManager
     {
+        private ActionRequest OnRefreshRequested;
+        private DirectoryRequest OnRootChangeRequested;
+
         public FileSystemRequest OnArchiveRequested;
         public FileSystemRequest OnDecompressRequested;
-        public RefreshRequest OnRefreshRequested;
-        public RootChangeRequest OnRootChangeRequested;
         public FileSystemRequest OnCopyRequested;
         public FileSystemRequest OnMoveRequested;
         
         private ArchiveService ArchiveService;
         private FileService FileService;
+        private NavigationService NavService;
         private Prompter Prompter = Prompter.GetInstance();
         private FilePathContainer Root;
-        private string[] LastSelectedItems;
-        private string LastSelectedItem;
-        private Dictionary<string, FileSystemInfo> Files = new Dictionary<string, FileSystemInfo>();
 
-        public delegate void FileSystemRequest(ICollection<FileSystemInfo> sources);
-        public delegate void RefreshRequest();
-        public delegate void RootChangeRequest(DirectoryInfo dirInfo);
 
-        public FileManager(ListView listBox, ArchiveService archiver, FileService fileService)
+        public FileManager(NavigationService navService, FileService fileService, ArchiveService archiver)
         {
-            Init(listBox, archiver, fileService);
+            Init(navService, fileService, archiver);
         }
-        public FileManager(ListView listBox, ArchiveService archiver, FileService fileService, FileManager fileManager)
+
+        public FileManager(NavigationService navService, FileService fileService, ArchiveService archiver, FileManager fileManager)
         {
-            Init(listBox, archiver, fileService);
+            Init(navService, fileService, archiver);
             OnArchiveRequested = new FileSystemRequest(fileManager.Archive);
             fileManager.OnArchiveRequested = new FileSystemRequest(Archive);
 
@@ -52,23 +56,22 @@ namespace SanityArchiver.fileManager
             OnMoveRequested = new FileSystemRequest(fileManager.Move);
             fileManager.OnMoveRequested = new FileSystemRequest(Move);
 
-            OnRefreshRequested = new RefreshRequest(fileManager.Refresh);
-            fileManager.OnRefreshRequested = new RefreshRequest(Refresh);
+            OnRefreshRequested = new ActionRequest(fileManager.Refresh);
+            fileManager.OnRefreshRequested = new ActionRequest(Refresh);
 
-            OnRootChangeRequested = new RootChangeRequest(fileManager.ChangeRoot);
-            fileManager.OnRootChangeRequested = new RootChangeRequest(ChangeRoot);
+            OnRootChangeRequested = new DirectoryRequest(fileManager.ChangeRoot);
+            fileManager.OnRootChangeRequested = new DirectoryRequest(ChangeRoot);
         }
 
-        
-
-        private void Init(ListView listBox, ArchiveService archiver, FileService fileService)
+        private void Init(NavigationService navService, FileService fileService, ArchiveService archiver)
         {
+            NavService = navService;
             ArchiveService = archiver;
             ArchiveService.OnResponse = RefreshBoth;
             FileService = fileService;
             FileService.OnResponse = RefreshBoth;
-            Root = FileService.Root;
-            LastSelectedItems = new string[0];
+            Root = NavService.Root;
+            FileService.Root = NavService.Root;
         }
 
         // Navigation methods
@@ -78,34 +81,27 @@ namespace SanityArchiver.fileManager
 
         public void OnItemDoubleClick()
         {
-            Window.SelectedItems.Clear();
-            NavigateTo(LastSelectedItem);
+            NavService.OnItemDoubleClick();
         }
 
         public void OnArchiveClicked()
         {
-            OnArchiveRequested(GetSelected());
+            OnArchiveRequested(NavService.Selected);
         }
 
         public void OnDecompressClicked()
         {
-            OnDecompressRequested(GetSelected());
+            OnDecompressRequested(NavService.Selected);
         }
 
         public void OnCopyClicked()
         {
-            OnCopyRequested(GetSelected());
+            OnCopyRequested(NavService.Selected);
         }
 
         public void OnMoveClicked()
         {
-            OnMoveRequested(GetSelected());
-        }
-
-        public void OnChangeDriveClicked()
-        {
-            DriveInfo[] drives = DriveInfo.GetDrives();
-            DriveForm df = new DriveForm(drives, OnChangeDriveResponse);
+            OnMoveRequested(NavService.Selected);
         }
 
         public void OnAlignRootClicked()
@@ -115,50 +111,41 @@ namespace SanityArchiver.fileManager
 
         public void OnPropertyClicked()
         {
-            FileService.ViewProperty(GetSelected());
+            FileService.ViewProperty(NavService.Selected);
         }
 
         public void OnSearchClicked()
         {
-            FileService.OnSearchCompleted = OnSearchResponse;
-            FileService.Search(OnSearchResponse);
+            FileService.Search(NavService.OnSearchResponse);
         }
 
         public void OnSelectionChanged()
         {
-            foreach (ListViewItem item in Window.SelectedItems)
-            {
-                string name = item.Text;
-                if (!LastSelectedItems.Contains(name))
-                {
-                    LastSelectedItem = name;
-                }
-            }
-            LastSelectedItems = new string[Window.SelectedItems.Count];
-            int i = 0;
-            foreach (ListViewItem item in Window.SelectedItems)
-            {
-                string name = item.Text;
-
-                LastSelectedItems[i] = name;
-                i++;
-            }
-        }
-
-        // Responses
-
-        private void OnChangeDriveResponse(string drive)
-        {
-            Root.Path = new DirectoryInfo(drive);
-            Refresh();
-        }
-
-        private void OnSearchResponse(ICollection<DirectoryInfo> dirs, ICollection<FileInfo> files)
-        {
-            TryRefresh(dirs, files);
+            NavService.OnSelectionChanged();
         }
 
         // Service wrappers
+
+        public void ChangeRoot(DirectoryInfo dirInfo)
+        {
+            NavService.ChangeRoot(dirInfo);
+        }
+
+        public void OnChangeDriveClicked()
+        {
+            NavService.ChangeDrive();
+        }
+
+        public void Refresh()
+        {
+            NavService.Refresh();
+        }
+
+        public void RefreshBoth()
+        {
+            Refresh();
+            OnRefreshRequested();
+        }
 
         public void Archive(ICollection<FileSystemInfo> sources)
         {

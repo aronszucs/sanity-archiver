@@ -24,10 +24,12 @@ namespace SanityArchiver.forms
             IArchiver archiver = new DotnetZipArchiver();
             ArchiveService archiveService = new ArchiveService(archiver);
             FileService fileService = new FileService(new FilePathContainer("c:\\"));
-            LeftFileManager = new FileManager(leftWindow, archiveService, fileService);
-            RightFileManager = new FileManager(rightWindow, archiveService, fileService, LeftFileManager);
-            LeftFileManager.AttachPathBar(leftPathTextBox);
-            RightFileManager.AttachPathBar(rightPathTextBox);
+            NavigationService navLeft = new NavigationService(leftWindow, leftPathTextBox);
+            NavigationService navRight = new NavigationService(rightWindow, rightPathTextBox);
+
+            LeftFileManager = new FileManager(navLeft, fileService, archiveService);
+            RightFileManager = new FileManager(navRight, fileService, archiveService, LeftFileManager);
+            
 
             LeftFileManager.Refresh();
             RightFileManager.Refresh();

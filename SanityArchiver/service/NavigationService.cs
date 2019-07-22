@@ -7,10 +7,13 @@ using SanityArchiver.prompter;
 using SanityArchiver.form;
 using SanityArchiver.data;
 using System.Windows.Forms;
+using System.IO;
+using SanityArchiver.fileManager;
 
 
 namespace SanityArchiver.service
 {
+    
     class NavigationService
     {
         private static readonly string PREV_DIRECTORY_SYMBOL = "........................";
@@ -21,12 +24,65 @@ namespace SanityArchiver.service
 
         private Prompter Prompter = Prompter.GetInstance();
 
-        private FilePathContainer Root;
+        public FilePathContainer Root { get; private set; }
+        private Dictionary<string, FileSystemInfo> Files = new Dictionary<string, FileSystemInfo>();
+
+        private string[] LastSelectedItems = new string[0];
+        private string LastSelectedItem;
 
         public NavigationService(ListView window, TextBox pathBar)
         {
             Window = window;
             PathBar = pathBar;
+            Root = new FilePathContainer("c:\\");
+        }
+
+        public ICollection<FileSystemInfo> Selected
+        {
+            get
+            {
+                List<FileSystemInfo> selected = new List<FileSystemInfo>();
+                foreach (ListViewItem item in Window.SelectedItems)
+                {
+                    string name = item.Text;
+                    try
+                    {
+                        selected.Add(Files[name]);
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        throw new FileManagerException("Invalid Selection");
+                    }
+                }
+                return selected;
+            }
+        }
+
+        public void OnSelectionChanged()
+        {
+            foreach (ListViewItem item in Window.SelectedItems)
+            {
+                string name = item.Text;
+                if (!LastSelectedItems.Contains(name))
+                {
+                    LastSelectedItem = name;
+                }
+            }
+            LastSelectedItems = new string[Window.SelectedItems.Count];
+            int i = 0;
+            foreach (ListViewItem item in Window.SelectedItems)
+            {
+                string name = item.Text;
+
+                LastSelectedItems[i] = name;
+                i++;
+            }
+        }
+
+        public void OnItemDoubleClick()
+        {
+            Window.SelectedItems.Clear();
+            NavigateTo(LastSelectedItem);
         }
 
         public void AttachPathBar(TextBox pathBarTextBox)
@@ -73,6 +129,7 @@ namespace SanityArchiver.service
                 PathBar.Text = Root.Path.FullName;
             }
         }
+
         private void AddElement(FileSystemInfo info)
         {
             string size;
@@ -87,12 +144,6 @@ namespace SanityArchiver.service
             }
             Window.Items.Add(info.Name).SubItems.Add(size);
             Files.Add(info.Name, info);
-        }
-
-        public void RefreshBoth()
-        {
-            Refresh();
-            OnRefreshRequested();
         }
 
         private List<FileSystemInfo> GetSelected()
@@ -121,7 +172,6 @@ namespace SanityArchiver.service
                 Root.Path = Root.Path.Parent;
                 try
                 {
-
                     Refresh();
                 }
                 catch (NullReferenceException)
@@ -157,10 +207,28 @@ namespace SanityArchiver.service
             Refresh();
         }
 
+        public void ChangeDrive()
+        {
+            DriveInfo[] drives = DriveInfo.GetDrives();
+            DriveForm df = new DriveForm(drives, OnChangeDriveResponse);
+        }
+
         public void NavigateTo(DirectoryInfo dirInfo)
         {
             Root.Path = dirInfo;
             Refresh();
+        }
+
+        // Response
+        private void OnChangeDriveResponse(string drive)
+        {
+            Root.Path = new DirectoryInfo(drive);
+            Refresh();
+        }
+
+        public void OnSearchResponse(ICollection<DirectoryInfo> dirs, ICollection<FileInfo> files)
+        {
+            TryRefresh(dirs, files);
         }
 
     }

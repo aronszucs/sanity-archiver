@@ -12,7 +12,7 @@ namespace SanityArchiver.service
 {
     class FileService : AbstractService
     {
-        public FilePathContainer Root {get; private set; }
+        public FilePathContainer Root {get; set; }
         public delegate void SearchHandler(ICollection<DirectoryInfo> dirs, ICollection<FileInfo> files);
         public SearchHandler OnSearchCompleted;
 
@@ -39,6 +39,7 @@ namespace SanityArchiver.service
 
         public void Search(SearchHandler onSearchCompleted)
         {
+            OnSearchCompleted = onSearchCompleted;
             InputPromptForm ip = new InputPromptForm("Enter search keyword", OnSearchResponse);
             ip.Show();
         }
