@@ -33,13 +33,6 @@ namespace SanityArchiver.forms
 
             LeftFileManager.Refresh();
             RightFileManager.Refresh();
-            /*
-            long size = 1000024L * 1024L * 1024L;
-            DataSize ds = HumanReadableSizeConverter.ConvertBytes(size);
-            double val = ds.Value;
-            string pr = ds.Prefix;
-            int k = 6;
-            */
         }
 
         private void LeftArchiveButton_Click(object sender, EventArgs e)
