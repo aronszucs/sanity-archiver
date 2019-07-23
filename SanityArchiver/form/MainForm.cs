@@ -130,5 +130,10 @@ namespace SanityArchiver.forms
         {
             LeftFileManager.OnSearchClicked();
         }
+
+        private void RightSearchButton_Click(object sender, EventArgs e)
+        {
+            RightFileManager.OnSearchClicked();
+        }
     }
 }

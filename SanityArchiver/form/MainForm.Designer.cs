@@ -63,6 +63,7 @@ namespace SanityArchiver.forms
             this.leftPropertyButton = new System.Windows.Forms.Button();
             this.rightPropertyButton = new System.Windows.Forms.Button();
             this.leftSearchButton = new System.Windows.Forms.Button();
+            this.rightSearchButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // leftArchiveButton
@@ -284,11 +285,22 @@ namespace SanityArchiver.forms
             this.leftSearchButton.UseVisualStyleBackColor = true;
             this.leftSearchButton.Click += new System.EventHandler(this.LeftSearchButton_Click);
             // 
+            // rightSearchButton
+            // 
+            this.rightSearchButton.Location = new System.Drawing.Point(1121, 291);
+            this.rightSearchButton.Name = "rightSearchButton";
+            this.rightSearchButton.Size = new System.Drawing.Size(83, 36);
+            this.rightSearchButton.TabIndex = 23;
+            this.rightSearchButton.Text = "Search";
+            this.rightSearchButton.UseVisualStyleBackColor = true;
+            this.rightSearchButton.Click += new System.EventHandler(this.RightSearchButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1216, 524);
+            this.Controls.Add(this.rightSearchButton);
             this.Controls.Add(this.leftSearchButton);
             this.Controls.Add(this.rightPropertyButton);
             this.Controls.Add(this.leftPropertyButton);
@@ -339,6 +351,7 @@ namespace SanityArchiver.forms
         private Button leftPropertyButton;
         private Button rightPropertyButton;
         private Button leftSearchButton;
+        private Button rightSearchButton;
     }
 }
 
